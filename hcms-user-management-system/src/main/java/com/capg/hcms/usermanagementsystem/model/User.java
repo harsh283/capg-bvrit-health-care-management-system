@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-
 	@Id
 	private String userId;
 	private String userName;
@@ -18,6 +17,9 @@ public class User {
 	private Integer age;
 	private String gender;
 	
+	public User() {
+		super();
+	}
 	public User(String userId, String userName, String userPassword, BigInteger contactNumber, String userEmail,
 			String userRole, Integer age, String gender) {
 		super();
@@ -84,6 +86,4 @@ public class User {
 				+ ", contactNumber=" + contactNumber + ", userEmail=" + userEmail + ", userRole=" + userRole + ", age="
 				+ age + ", gender=" + gender + "]";
 	}
-	
-
 }
