@@ -30,16 +30,16 @@ public class TestController {
 	{
 	  
 		List<TestManagement> list=testService.findAllTests();
-		ResponseEntity<List<TestManagement>>  rt = new ResponseEntity<List<TestManagement>>(list,HttpStatus.OK);
-		return rt;
+		ResponseEntity<List<TestManagement>>  listOfTests = new ResponseEntity<List<TestManagement>>(list,HttpStatus.OK);
+		return listOfTests;
 		
 	}	
 	@PostMapping("/addtest")
 	public ResponseEntity<TestManagement>  addTest(@RequestBody TestManagement test)
 	{
 		TestManagement te=testService.addTest(test);
-		ResponseEntity<TestManagement>  re = new ResponseEntity<TestManagement>(te,HttpStatus.OK);
-		return re;
+		ResponseEntity<TestManagement> ResponseEntityadd  = new ResponseEntity<TestManagement>(te,HttpStatus.OK);
+		return ResponseEntityadd;
 	}
 	
 	
@@ -48,34 +48,34 @@ public class TestController {
 	public  ResponseEntity<TestManagement>  deleteTestById(@PathVariable("id") String testId) throws TestException
 	{
 		
-		ResponseEntity<TestManagement>  rt = null;
+		ResponseEntity<TestManagement>  ResponseEntitydelete = null;
 	    TestManagement test = testService.deleteTestById(testId);
-		rt= new ResponseEntity<TestManagement>(test,HttpStatus.OK);
-		return rt;
+	    ResponseEntitydelete= new ResponseEntity<TestManagement>(test,HttpStatus.OK);
+		return ResponseEntitydelete;
 	}
 	@GetMapping("gettest/id/{id}")
 	public  ResponseEntity<TestManagement>  findTestById(@PathVariable("id")  String id) throws TestException 
 	{
 		
 		   TestManagement  test = testService.findTestById(id);
-		   ResponseEntity<TestManagement>  re = new ResponseEntity<TestManagement>(test,HttpStatus.OK);
-		   return re;
+		   ResponseEntity<TestManagement>  testbyid= new ResponseEntity<TestManagement>(test,HttpStatus.OK);
+		   return testbyid;
 	}
 	
 	
 	@PutMapping("/updatetest")
 	public ResponseEntity<TestManagement> updateTest(@RequestBody TestManagement test) throws TestException
 	{
-		ResponseEntity<TestManagement> rt =null;
+		ResponseEntity<TestManagement> ResponseEntityupdate =null;
 		if(test!=null)
 		{
 		test=testService.updateTest(test);
-		rt=new ResponseEntity<TestManagement>(test,HttpStatus.OK);
+		ResponseEntityupdate=new ResponseEntity<TestManagement>(test,HttpStatus.OK);
 		}
 		else
 		{
-			rt=new ResponseEntity<TestManagement>(test,HttpStatus.NOT_FOUND);
+			ResponseEntityupdate=new ResponseEntity<TestManagement>(test,HttpStatus.NOT_FOUND);
 		}
-		return rt;
+		return ResponseEntityupdate;
 	}
 }
