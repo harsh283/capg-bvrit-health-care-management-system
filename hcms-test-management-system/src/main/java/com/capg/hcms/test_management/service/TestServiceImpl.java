@@ -17,29 +17,29 @@ public class TestServiceImpl implements ITestService{
 	
 	@Override
 	public TestManagement addTest(TestManagement test) {
-		TestManagement  ts = testRepo.saveAndFlush(test);
-	     return ts;
+		TestManagement  addtest = testRepo.saveAndFlush(test);
+	     return addtest;
 	}
 
 	@Override
 	public TestManagement deleteTestById(String testId) throws TestException {
-       TestManagement ts =null;
+       TestManagement deletetest =null;
 		if( testRepo.existsById(testId))
 		{
-			 ts = testRepo.findById(testId).get();
+			 deletetest = testRepo.findById(testId).get();
 			 testRepo.deleteById(testId);
 		}
 		else
 		{
 			throw new TestException(" ID NOT FOUND ");
 		}
-		return ts;
+		return deletetest;
 	}
 
 	@Override
 	public List<TestManagement> findAllTests() throws TestException {
-		List<TestManagement> list = testRepo.findAll();
-		return list;
+		List<TestManagement> listOfTests = testRepo.findAll();
+		return listOfTests;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class TestServiceImpl implements ITestService{
 		String testId =test.getTestId();
 		if(testRepo.existsById(testId))
 		{
-			TestManagement t=testRepo.findById(testId).get();
+			TestManagement upadatetest=testRepo.findById(testId).get();
 			testRepo.saveAndFlush(test);
 		}
 		else

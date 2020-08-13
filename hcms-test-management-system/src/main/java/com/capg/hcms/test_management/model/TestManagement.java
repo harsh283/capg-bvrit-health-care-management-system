@@ -1,20 +1,13 @@
 package com.capg.hcms.test_management.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 public class TestManagement {
-
+	
 	@Id
-
 	private String testId;
-	
-	
 	private String testName;
 	
 	public TestManagement(String testId, String testName) {
