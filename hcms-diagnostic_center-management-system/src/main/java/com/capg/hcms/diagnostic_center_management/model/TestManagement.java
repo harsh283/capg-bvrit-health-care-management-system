@@ -2,15 +2,15 @@ package com.capg.hcms.diagnostic_center_management.model;
 
 import javax.persistence.ManyToOne;
 
-public class Test {
+public class TestManagement {
 
 private String testId;
 private String testName;
-public Test() {
+public TestManagement() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public Test(String testId, String testName) {
+public TestManagement(String testId, String testName) {
 	super();
 	this.testId = testId;
 	this.testName = testName;
