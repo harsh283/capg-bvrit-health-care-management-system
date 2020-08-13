@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
+import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
 import com.capg.hcms.diagnostic_center_management.model.DiagnosticCenter;
 import com.capg.hcms.diagnostic_center_management.repo.DiagnosticCenterRepo;
 
@@ -20,21 +22,22 @@ public DiagnosticCenter addCenter(DiagnosticCenter center) {
 	
 }
 @Override
-public DiagnosticCenter getCenterById(String centerId) {
+public DiagnosticCenter getCenterById(String centerId) throws SpecifiedCenterDoesnotExistException {
 	// TODO Auto-generated method stub
 	DiagnosticCenter existingCenter=repository.getOne(centerId);
 	if(existingCenter==null)
 	{
-		
+		throw new SpecifiedCenterDoesnotExistException("Center with center id "+centerId+"Doesnot exist");
 	}
 	return existingCenter;
 }
 @Override
-public List<DiagnosticCenter> getAllCenters() {
+public List<DiagnosticCenter> getAllCenters() throws NoCentersAreAvailableException {
 	// TODO Auto-generated method stub
 	List<DiagnosticCenter> centerList=repository.findAll();
-	if(centerList==null)
+	if(centerList.isEmpty())
 	{
+		throw new NoCentersAreAvailableException("No center is present");
 		
 	}
 	
@@ -45,13 +48,16 @@ public List<DiagnosticCenter> getAllCenters() {
 
 
 @Override
-public boolean removeAllCenters() {
+public boolean removeAllCenters() throws NoCentersAreAvailableException {
 	// TODO Auto-generated method stub
 	List<DiagnosticCenter> centerList=repository.findAll();
-	if(centerList==null)
+	System.out.println(centerList);
+	if(centerList.isEmpty())
 	{
 		
+		throw new NoCentersAreAvailableException("Centers are not present");
 	}
+	repository.deleteAll();
 	return true;
 }
 

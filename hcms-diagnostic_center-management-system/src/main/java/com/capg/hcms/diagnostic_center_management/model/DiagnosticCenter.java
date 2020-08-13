@@ -1,13 +1,18 @@
 package com.capg.hcms.diagnostic_center_management.model;
 
 import java.math.BigInteger;
+
 import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Entity
+@Table(name="center")
 public class DiagnosticCenter {
+	
 @Id
 private String centerId;
 private String centerName;
