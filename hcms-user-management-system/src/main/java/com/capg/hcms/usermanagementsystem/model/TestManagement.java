@@ -1,15 +1,15 @@
-package com.capg.hcms.appointmentmanagementsystem.model;
+package com.capg.hcms.usermanagementsystem.model;
 
-public class Test {
+public class TestManagement {
 
 	private String testId;
 	private String testName;
 	
-	public Test() {
+	public TestManagement() {
 		super();
 		
 	}
-	public Test(String testId, String testName) {
+	public TestManagement(String testId, String testName) {
 		super();
 		this.testId = testId;
 		this.testName = testName;
