@@ -9,21 +9,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(TestException.class)
-	public @ResponseBody ResponseEntity<ErrorInfo>  handleException(TestException ex,HttpServletRequest req)
+	public @ResponseBody ResponseEntity<ErrorInfo>  handleException(TestException exception,HttpServletRequest request)
 	{
 		
-		 String message=ex.getMessage();
-		 String uri= req.getRequestURI();
+		 String message=exception.getMessage();
+		 String uri= request.getRequestURI();
 		 
-		 ErrorInfo  obj = new ErrorInfo(LocalDateTime.now(),message,uri);
-		 ResponseEntity<ErrorInfo>  re = new ResponseEntity<ErrorInfo>(obj,HttpStatus.NOT_FOUND);
-		 return re;
+		 ErrorInfo  errorinfo = new ErrorInfo(LocalDateTime.now(),message,uri);
+		 ResponseEntity<ErrorInfo>  responseentity = new ResponseEntity<ErrorInfo>(errorinfo,HttpStatus.NOT_FOUND);
+		 return responseentity;
 	}
 	
 	
