@@ -3,11 +3,16 @@ package com.capg.hcms.usermanagementsystem.model;
 import java.math.BigInteger;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="user_data")
 public class User {
 	@Id
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	private String userId;
 	private String userName;
 	private String userPassword;
