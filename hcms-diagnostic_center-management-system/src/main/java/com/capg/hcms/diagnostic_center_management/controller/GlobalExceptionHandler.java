@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
 import com.capg.hcms.diagnostic_center_management.exceptions.ErrorInfo;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
@@ -24,6 +25,12 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
 	@ExceptionHandler(value= {SpecifiedCenterDoesnotExistException.class})
 	public ErrorInfo handleSpecifiedCenterDoesnotExistException(SpecifiedCenterDoesnotExistException ex , HttpServletRequest req)
+	{
+		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
+	}
+	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value= {CenterAlreadyExistsException.class})
+	public ErrorInfo handleCenterAlreadyExistsException(CenterAlreadyExistsException ex , HttpServletRequest req)
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}

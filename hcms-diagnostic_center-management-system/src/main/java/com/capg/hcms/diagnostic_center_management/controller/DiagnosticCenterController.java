@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
 import com.capg.hcms.diagnostic_center_management.model.DiagnosticCenter;
@@ -22,7 +23,7 @@ public class DiagnosticCenterController {
 	private DiagnosticCenterServiceImplementation centerService;
 	
 	@PostMapping("/addcenter")
-	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center)
+	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
 	{
 	
 		return centerService.addCenter(center);
@@ -38,7 +39,7 @@ public class DiagnosticCenterController {
 		return centerService.getAllCenters();
 	}
 	@DeleteMapping("/removecenter/centerId/{centerId}")
-	public boolean removeCenter(@PathVariable String centerId)
+	public boolean removeCenter(@PathVariable String centerId) throws CenterAlreadyExistsException
 	{
 		return centerService.removeCenter(centerId);
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
 import com.capg.hcms.diagnostic_center_management.model.DiagnosticCenter;
@@ -16,8 +17,12 @@ public class DiagnosticCenterServiceImplementation implements IDiagnosticCenterS
 private DiagnosticCenterRepo repository;
 
 @Override
-public DiagnosticCenter addCenter(DiagnosticCenter center) {
+public DiagnosticCenter addCenter(DiagnosticCenter center) throws CenterAlreadyExistsException {
 	// TODO Auto-generated method stub
+	if(repository.existsById(center.getCenterId()))
+	{
+		throw new CenterAlreadyExistsException("Center already exists kindly enter another center ID");
+	}
 	return repository.save(center);
 	
 }
@@ -62,9 +67,17 @@ public boolean removeAllCenters() throws NoCentersAreAvailableException {
 }
 
 @Override
-public boolean removeCenter(String centerId) {
+public boolean removeCenter(String centerId) throws CenterAlreadyExistsException {
+	
 	// TODO Auto-generated method stub
+	if(repository.existsById(centerId))
+	{
+		repository.deleteById(centerId);
+		return true;
+	}
 
-	return false;
+	else {
+		throw new CenterAlreadyExistsException("Center already exists kindly enter another center ID");
+	}
 }
 }
