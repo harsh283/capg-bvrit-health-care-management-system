@@ -12,5 +12,5 @@ DiagnosticCenter addCenter(DiagnosticCenter center) throws CenterAlreadyExistsEx
 List<DiagnosticCenter> getAllCenters() throws NoCentersAreAvailableException;
 DiagnosticCenter getCenterById(String centerId) throws SpecifiedCenterDoesnotExistException;
 boolean removeAllCenters() throws NoCentersAreAvailableException;
-boolean removeCenter(String centerId) throws CenterAlreadyExistsException;
+boolean removeCenter(String centerId) throws NoCentersAreAvailableException;
 }

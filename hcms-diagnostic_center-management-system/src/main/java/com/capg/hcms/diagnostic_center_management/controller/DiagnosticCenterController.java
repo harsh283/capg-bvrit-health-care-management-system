@@ -22,12 +22,6 @@ public class DiagnosticCenterController {
 	@Autowired 
 	private DiagnosticCenterServiceImplementation centerService;
 	
-	@PostMapping("/addcenter")
-	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
-	{
-	
-		return centerService.addCenter(center);
-	}
 	@GetMapping("/getcenter/center-Id/{centerId}")
 	public DiagnosticCenter getCenterById(@PathVariable String centerId) throws SpecifiedCenterDoesnotExistException
 	{
@@ -38,8 +32,15 @@ public class DiagnosticCenterController {
 	{
 		return centerService.getAllCenters();
 	}
+	@PostMapping("/addcenter")
+	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
+	{
+	
+		return centerService.addCenter(center);
+	}
+
 	@DeleteMapping("/removecenter/centerId/{centerId}")
-	public boolean removeCenter(@PathVariable String centerId) throws CenterAlreadyExistsException
+	public boolean removeCenter(@PathVariable String centerId) throws NoCentersAreAvailableException
 	{
 		return centerService.removeCenter(centerId);
 	}
