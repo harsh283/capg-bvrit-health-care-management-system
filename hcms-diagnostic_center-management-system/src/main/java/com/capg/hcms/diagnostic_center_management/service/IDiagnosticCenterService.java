@@ -1,5 +1,6 @@
 package com.capg.hcms.diagnostic_center_management.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
@@ -13,4 +14,6 @@ List<DiagnosticCenter> getAllCenters() throws NoCentersAreAvailableException;
 DiagnosticCenter getCenterById(String centerId) throws SpecifiedCenterDoesnotExistException;
 boolean removeAllCenters() throws NoCentersAreAvailableException;
 boolean removeCenter(String centerId) throws NoCentersAreAvailableException;
+DiagnosticCenter addTestId(String centerId,String testId) throws CenterAlreadyExistsException;
+DiagnosticCenter addAppointmentId(String centerId,BigInteger appointmentId);
 }

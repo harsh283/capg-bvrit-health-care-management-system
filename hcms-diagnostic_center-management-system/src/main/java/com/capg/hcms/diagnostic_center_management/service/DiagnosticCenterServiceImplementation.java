@@ -1,5 +1,6 @@
 package com.capg.hcms.diagnostic_center_management.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 
@@ -83,5 +84,25 @@ public boolean removeCenter(String centerId) throws NoCentersAreAvailableExcepti
 	else {
 		throw new NoCentersAreAvailableException("Center doesnot exist kindly enter another center ID");
 	}
+}
+@Override
+public DiagnosticCenter addTestId(String centerId, String testId) throws CenterAlreadyExistsException {
+	// TODO Auto-generated method stub
+	DiagnosticCenter existingCenter=repository.getOne(centerId);
+	if(existingCenter==null)
+	{
+		throw new CenterAlreadyExistsException("Center with specified centerId unavailable");
+	}
+	existingCenter.getTests().add(testId);
+	
+
+	return repository.save(existingCenter);
+}
+@Override
+public DiagnosticCenter addAppointmentId(String centerId, BigInteger appointmentId) {
+	// TODO Auto-generated method stub
+	DiagnosticCenter existingCenter=repository.getOne(centerId);
+	existingCenter.getAppointments().add(appointmentId);
+	return repository.save(existingCenter);
 }
 }
