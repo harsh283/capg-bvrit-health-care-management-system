@@ -3,6 +3,7 @@ package com.capg.hcms.appointmentmanagementsystem.service;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import com.capg.hcms.appointmentmanagementsystem.Exception.AppointmentAlreadyApp
 import com.capg.hcms.appointmentmanagementsystem.Exception.AppointmentNotFoundException;
 import com.capg.hcms.appointmentmanagementsystem.Exception.SlotNotAvailableException;
 import com.capg.hcms.appointmentmanagementsystem.model.Appointment;
-import com.capg.hcms.appointmentmanagementsystem.model.AppointmentList;
 import com.capg.hcms.appointmentmanagementsystem.repo.IAppointmentMSRepo;
 
 @Service
@@ -48,12 +48,13 @@ public class AppointmentMSServiceImpl implements IAppointmentMSService {
 
 
 	@Override
-	public AppointmentList getAllAppointments() {
+	public List<Appointment> getAllAppointments() {
 
 		if (appointmentRepo.findAll().isEmpty()) {
 			throw new AppointmentNotFoundException("Appointment list is empty");
 		}
-		return new AppointmentList(appointmentRepo.findAll());
+		List<Appointment> allAppointments = appointmentRepo.findAll();
+		return allAppointments;
 	}
 	
 	

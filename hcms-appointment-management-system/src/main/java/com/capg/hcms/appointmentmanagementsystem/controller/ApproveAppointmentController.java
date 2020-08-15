@@ -1,6 +1,7 @@
 package com.capg.hcms.appointmentmanagementsystem.controller;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +32,7 @@ public class ApproveAppointmentController {
 	}
 
 	@GetMapping("/getallappointments")
-	public AppointmentList getAllAppointment() {
+	public List<Appointment> getAllAppointment() {
 		return service.getAllAppointments();
 	}
 

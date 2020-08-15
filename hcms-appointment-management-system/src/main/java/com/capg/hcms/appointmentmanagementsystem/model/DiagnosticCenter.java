@@ -8,17 +8,17 @@ import java.util.List;
 public class DiagnosticCenter {
      private String centerId;
      private String centerName;
-     private List<String> testList;
+     private List<String> tests;
      private List<BigInteger> appointments;
      
      public DiagnosticCenter() {
 	          super();
        }
-     public DiagnosticCenter(String centerId, String centerName, List<String> testList, List<BigInteger> appointments) {
+     public DiagnosticCenter(String centerId, String centerName, List<String> tests, List<BigInteger> appointments) {
     	 super();
     	 this.centerId = centerId;
     	 this.centerName = centerName;
-    	 this.testList = testList;
+    	 this.tests = tests;
     	 this.appointments = appointments;
      }
 	public String getCenterId() {
@@ -33,11 +33,11 @@ public class DiagnosticCenter {
 	public void setCenterName(String centerName) {
 		this.centerName = centerName;
 	}
-	public List<String> getTestList() {
-		return testList;
+	public List<String> getTests() {
+		return tests;
 	}
-	public void setTestList(List<String> testList) {
-		this.testList = testList;
+	public void setTests(List<String> tests) {
+		this.tests = tests;
 	}
 	public List<BigInteger> getAppointments() {
 		return appointments;
@@ -47,7 +47,7 @@ public class DiagnosticCenter {
 	}
 	@Override
 	public String toString() {
-		return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", testList=" + testList
+		return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", tests=" + tests
 				+ ", appointments=" + appointments + "]";
 	}
 	
