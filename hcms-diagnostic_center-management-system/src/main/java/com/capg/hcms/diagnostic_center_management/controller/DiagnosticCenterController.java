@@ -1,5 +1,6 @@
 package com.capg.hcms.diagnostic_center_management.controller;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,12 +24,6 @@ public class DiagnosticCenterController {
 	@Autowired 
 	private DiagnosticCenterServiceImplementation centerService;
 	
-	@PostMapping("/addcenter")
-	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
-	{
-	
-		return centerService.addCenter(center);
-	}
 	@GetMapping("/getcenter/center-Id/{centerId}")
 	public DiagnosticCenter getCenterById(@PathVariable String centerId) throws SpecifiedCenterDoesnotExistException
 	{
@@ -38,8 +34,15 @@ public class DiagnosticCenterController {
 	{
 		return centerService.getAllCenters();
 	}
+	@PostMapping("/addcenter")
+	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
+	{
+	
+		return centerService.addCenter(center);
+	}
+
 	@DeleteMapping("/removecenter/centerId/{centerId}")
-	public boolean removeCenter(@PathVariable String centerId) throws CenterAlreadyExistsException
+	public boolean removeCenter(@PathVariable String centerId) throws NoCentersAreAvailableException
 	{
 		return centerService.removeCenter(centerId);
 	}
@@ -50,6 +53,16 @@ public class DiagnosticCenterController {
 		return centerService.removeAllCenters();
 	}
 
-
+	@PutMapping("/addtestid/{centerId}/testId/{testId}")
+	public DiagnosticCenter assignTestId(@PathVariable String centerId,@PathVariable String testId) throws CenterAlreadyExistsException
+	{
+		return centerService.addTestId(centerId, testId);
+	}
+	@PutMapping("/addappointmentid/{centerId}/appointmentid/{appointmentId}")
+	public DiagnosticCenter assignAppointment(@PathVariable String centerId,@PathVariable BigInteger appointmentId)
+	{
+		return centerService.addAppointmentId(centerId, appointmentId);
+	}
+	
 
 }

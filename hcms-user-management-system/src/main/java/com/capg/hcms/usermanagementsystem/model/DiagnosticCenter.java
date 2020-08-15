@@ -6,21 +6,22 @@ import java.util.List;
 
 
 public class DiagnosticCenter {
-     private String centerId;
-     private String centerName;
-     private List<String> testList;
-     private List<BigInteger> appointments;
-     
-     public DiagnosticCenter() {
-	          super();
-       }
-     public DiagnosticCenter(String centerId, String centerName, List<String> testList, List<BigInteger> appointments) {
-    	 super();
-    	 this.centerId = centerId;
-    	 this.centerName = centerName;
-    	 this.testList = testList;
-    	 this.appointments = appointments;
-     }
+   
+	private String centerId;
+	private String centerName;
+	private List<String> tests;
+	private List<BigInteger> appointments;
+	public DiagnosticCenter() {
+		super();
+		
+	}
+	public DiagnosticCenter(String centerId, String centerName, List<String> testList, List<BigInteger> appointments) {
+		super();
+		this.centerId = centerId;
+		this.centerName = centerName;
+		this.tests = testList;
+		this.appointments = appointments;
+	}
 	public String getCenterId() {
 		return centerId;
 	}
@@ -30,15 +31,17 @@ public class DiagnosticCenter {
 	public String getCenterName() {
 		return centerName;
 	}
+
+	public List<String> getTests() {
+		return tests;
+	}
+	public void setTests(List<String> tests) {
+		this.tests = tests;
+	}
 	public void setCenterName(String centerName) {
 		this.centerName = centerName;
 	}
-	public List<String> getTestList() {
-		return testList;
-	}
-	public void setTestList(List<String> testList) {
-		this.testList = testList;
-	}
+
 	public List<BigInteger> getAppointments() {
 		return appointments;
 	}
@@ -47,8 +50,10 @@ public class DiagnosticCenter {
 	}
 	@Override
 	public String toString() {
-		return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", testList=" + testList
+		return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", testList=" + tests
 				+ ", appointments=" + appointments + "]";
 	}
-	
+
 	}
+	
+	

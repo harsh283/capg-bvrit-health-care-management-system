@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
@@ -30,7 +31,7 @@ public class UserController {
 	{
 		return userService.registerUser(user);
 	}
-	@DeleteMapping("/deleteuser/userId/{userId}")
+	@RequestMapping("/deleteuser/userId/{userId}")
 	public boolean deleteUser(@PathVariable String userId)
 	{
 		return userService.deleteUser(userId);

@@ -17,7 +17,7 @@ public class DiagnosticCenter {
 private String centerId;
 private String centerName;
 @ElementCollection
-private List<String> testList;
+private List<String> tests;
 @ElementCollection
 private List<BigInteger> appointments;
 public DiagnosticCenter() {
@@ -28,7 +28,7 @@ public DiagnosticCenter(String centerId, String centerName, List<String> testLis
 	super();
 	this.centerId = centerId;
 	this.centerName = centerName;
-	this.testList = testList;
+	this.tests = testList;
 	this.appointments = appointments;
 }
 public String getCenterId() {
@@ -40,15 +40,17 @@ public void setCenterId(String centerId) {
 public String getCenterName() {
 	return centerName;
 }
+
+public List<String> getTests() {
+	return tests;
+}
+public void setTests(List<String> tests) {
+	this.tests = tests;
+}
 public void setCenterName(String centerName) {
 	this.centerName = centerName;
 }
-public List<String> getTestList() {
-	return testList;
-}
-public void setTestList(List<String> testList) {
-	this.testList = testList;
-}
+
 public List<BigInteger> getAppointments() {
 	return appointments;
 }
@@ -57,7 +59,7 @@ public void setAppointments(List<BigInteger> appointments) {
 }
 @Override
 public String toString() {
-	return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", testList=" + testList
+	return "DiagnosticCenter [centerId=" + centerId + ", centerName=" + centerName + ", testList=" + tests
 			+ ", appointments=" + appointments + "]";
 }
 
