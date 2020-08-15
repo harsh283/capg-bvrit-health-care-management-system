@@ -105,4 +105,16 @@ public DiagnosticCenter addAppointmentId(String centerId, BigInteger appointment
 	existingCenter.getAppointments().add(appointmentId);
 	return repository.save(existingCenter);
 }
+@Override
+public boolean removeTestId(String centerId, String testId) {
+	// TODO Auto-generated method stub
+	DiagnosticCenter center=repository.getOne(centerId);
+	
+	center.getTests().remove(testId);
+	
+	repository.save(center);
+	
+	return true;
+
+}
 }

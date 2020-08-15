@@ -16,4 +16,5 @@ boolean removeAllCenters() throws NoCentersAreAvailableException;
 boolean removeCenter(String centerId) throws NoCentersAreAvailableException;
 DiagnosticCenter addTestId(String centerId,String testId) throws CenterAlreadyExistsException;
 DiagnosticCenter addAppointmentId(String centerId,BigInteger appointmentId);
+boolean removeTestId(String centerId,String testId);
 }

@@ -63,6 +63,10 @@ public class DiagnosticCenterController {
 	{
 		return centerService.addAppointmentId(centerId, appointmentId);
 	}
-	
+	@PutMapping("/remove-testid/{centerId}/test-id/{testId}")
+	public boolean removeTestId(@PathVariable String centerId,@PathVariable String testId)
+	{
+		return centerService.removeTestId(centerId, testId);
+	}
 
 }

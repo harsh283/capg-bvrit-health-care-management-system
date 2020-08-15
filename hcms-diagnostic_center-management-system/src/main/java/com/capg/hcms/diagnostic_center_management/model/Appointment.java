@@ -11,7 +11,7 @@ public class Appointment {
 	private String userId;
 	private BigInteger appointmentId;
 	private String testId;
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy/MM/ddThh:mm")
 	private LocalDateTime dateTime;
 	private boolean approved = false;
 	public Appointment() {
