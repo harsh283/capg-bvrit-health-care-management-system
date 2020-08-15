@@ -13,6 +13,7 @@ import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNotFoundException;
+import com.capg.hcms.usermanagementsystem.exceptions.UserNumberInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserPasswordInvalidException;
 import com.capg.hcms.usermanagementsystem.model.User;
 import com.capg.hcms.usermanagementsystem.repo.UserRepo;
@@ -24,8 +25,8 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public User registerUser(User user) throws UserNameInvalidException, 
-	  UserPasswordInvalidException,UserEmailInvalidException, 
-	  ContactNumberAlreadyExistException,UserNameAlreadyExistException,EmailAlreadyExistException 
+	  UserPasswordInvalidException,UserEmailInvalidException, UserNumberInvalidException
+	  ,UserNameAlreadyExistException,EmailAlreadyExistException 
 	     {
 		user.setUserRole("user");
 		Pattern p1=Pattern.compile("[A-Z]{1}[a-zA-Z0-9]{6,14}$");
@@ -35,8 +36,10 @@ public class UserServiceImpl implements IUserService{
                 + "(?=.*[@#$%^&+=])"
                 + "(?=\\S+$).{8,20}$");
 		Matcher m2=p2.matcher(user.getUserPassword());
-		Pattern p3=Pattern.compile("[0-9a-zA-Z][0-9a-zA-Z._]*[@]gmail.com");
+		Pattern p3=Pattern.compile("^(.+)@(.+)$");
 		Matcher m3=p3.matcher(user.getUserEmail());
+		Pattern p4=Pattern.compile("\\d{10}");
+		Matcher m4=p4.matcher(user.getContactNumber().toString());
 		if(!(m1.find() &&  m1.group().equals(user.getUserName())))
 		{
 			throw new UserNameInvalidException("Username should start with capital letter ad size should be 6-14  characters");
@@ -52,14 +55,18 @@ public class UserServiceImpl implements IUserService{
 		{
    			throw new UserEmailInvalidException("user email is not valid");
 		}
+		else if(!( m4.find() &&  m4.group().equals(user.getContactNumber().toString())) )
+		{
+			throw new UserNumberInvalidException("contact number should contain 10 digits and starting may be 7,8 or 9");
+		}
 		else if(userRepo.getUserByUserName(user.getUserName())!=null)
-			throw new UserNameAlreadyExistException("User with Name "+user.getUserName()+"already exist");
+			throw new UserNameAlreadyExistException("User with Name "+user.getUserName()+" already exist");
 		
 		else if(userRepo.getUserByContactNumber(user.getContactNumber())!=null)
-			throw new ContactNumberAlreadyExistException("User with ContactNumber "+user.getContactNumber()+"already exist");
+			throw new ContactNumberAlreadyExistException("User with ContactNumber "+user.getContactNumber()+" already exist");
 		
 		else if(userRepo.getUserByUserEmail(user.getUserEmail())!=null)
-			throw new EmailAlreadyExistException("User with Email "+user.getUserEmail()+"already exist");
+			throw new EmailAlreadyExistException("User with Email "+user.getUserEmail()+" already exist");
 		else
 		     userRepo.save(user);
 		return user;

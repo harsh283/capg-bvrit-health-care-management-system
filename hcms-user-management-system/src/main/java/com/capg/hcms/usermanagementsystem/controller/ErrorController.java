@@ -16,6 +16,7 @@ import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNotFoundException;
+import com.capg.hcms.usermanagementsystem.exceptions.UserNumberInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserPasswordInvalidException;
 
 @RestControllerAdvice
@@ -60,6 +61,12 @@ public class ErrorController {
 	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(value= {UserNotFoundException.class})
 	public ErrorInfo handleUserNotFound(UserNotFoundException ex , HttpServletRequest req)
+	{
+		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
+	}
+	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value= {UserNumberInvalidException.class})
+	public ErrorInfo handleUserNumberInvalid(UserNumberInvalidException ex , HttpServletRequest req)
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
