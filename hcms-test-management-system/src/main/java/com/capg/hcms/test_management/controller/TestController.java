@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capg.hcms.test_management.exception.TestException;
+import com.capg.hcms.test_management.exception.NoTestIsAvailableException;
+import com.capg.hcms.test_management.exception.TestIdAlreadyExistsException;
+import com.capg.hcms.test_management.exception.TestIdDoesNotExistException;
 import com.capg.hcms.test_management.model.TestManagement;
 import com.capg.hcms.test_management.service.ITestService;
 
@@ -25,8 +26,8 @@ public class TestController {
 	@Autowired
 	ITestService  testService;
 
-	@GetMapping("/getalltest")
-	public ResponseEntity<List<TestManagement>>  findAllTests() throws TestException
+	@GetMapping("/getAll")
+	public ResponseEntity<List<TestManagement>>  findAllTests() throws NoTestIsAvailableException
 	{
 	  
 		List<TestManagement> list=testService.findAllTests();
@@ -34,27 +35,35 @@ public class TestController {
 		return listOfTests;
 		
 	}	
-	@PostMapping("/addtest")
-	public ResponseEntity<TestManagement>  addTest(@RequestBody TestManagement test)
+	
+	@DeleteMapping("/deleteAll")
+	public boolean   deleteAllTests() throws NoTestIsAvailableException
 	{
-		TestManagement te=testService.addTest(test);
-		ResponseEntity<TestManagement> ResponseEntityadd  = new ResponseEntity<TestManagement>(te,HttpStatus.OK);
+	  
+		boolean status=testService.deleteAllTests();
+		//ResponseEntity<List<TestManagement>>  listOfTests = new ResponseEntity<List<TestManagement>>(status,HttpStatus.OK);
+		return status;
+		
+	}	
+	
+	@PostMapping("/addTest")
+	public ResponseEntity<TestManagement>  addTest(@RequestBody TestManagement test) throws TestIdAlreadyExistsException
+	{
+		TestManagement addtest=testService.addTest(test);
+		ResponseEntity<TestManagement> ResponseEntityadd  = new ResponseEntity<TestManagement>(addtest,HttpStatus.OK);
 		return ResponseEntityadd;
 	}
-	
-	
-	
-	@DeleteMapping("deletetest/id/{id}")
-	public  ResponseEntity<TestManagement>  deleteTestById(@PathVariable("id") String testId) throws TestException
+	@DeleteMapping("/deleteTest/id/{id}")
+	public  boolean deleteTestById(@PathVariable("id") String testId) throws TestIdDoesNotExistException
 	{
 		
 		ResponseEntity<TestManagement>  ResponseEntitydelete = null;
-	    TestManagement test = testService.deleteTestById(testId);
-	    ResponseEntitydelete= new ResponseEntity<TestManagement>(test,HttpStatus.OK);
-		return ResponseEntitydelete;
+	    boolean test = testService.deleteTestById(testId);
+	    ResponseEntitydelete= new ResponseEntity<TestManagement>(HttpStatus.OK);
+		return test;
 	}
-	@GetMapping("gettest/id/{id}")
-	public  ResponseEntity<TestManagement>  findTestById(@PathVariable("id")  String id) throws TestException 
+	@GetMapping("/getTest/id/{id}")
+	public  ResponseEntity<TestManagement>  findTestById(@PathVariable("id")  String id) throws TestIdDoesNotExistException 
 	{
 		
 		   TestManagement  test = testService.findTestById(id);
@@ -63,8 +72,8 @@ public class TestController {
 	}
 	
 	
-	@PutMapping("/updatetest")
-	public ResponseEntity<TestManagement> updateTest(@RequestBody TestManagement test) throws TestException
+	@PutMapping("/updateTest")
+	public ResponseEntity<TestManagement> updateTest(@RequestBody TestManagement test) throws TestIdDoesNotExistException
 	{
 		ResponseEntity<TestManagement> ResponseEntityupdate =null;
 		if(test!=null)
