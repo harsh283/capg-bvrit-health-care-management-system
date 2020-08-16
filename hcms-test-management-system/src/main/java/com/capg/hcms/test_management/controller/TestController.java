@@ -87,4 +87,9 @@ public class TestController {
 		}
 		return ResponseEntityupdate;
 	}
+	@GetMapping("/add-default")
+	public List<TestManagement> addDefault()
+	{
+		return testService.addDefault();
+	}
 }

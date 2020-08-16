@@ -68,5 +68,10 @@ public class DiagnosticCenterController {
 	{
 		return centerService.removeTestId(centerId, testId);
 	}
+	@GetMapping("/removealltests")
+	public List<DiagnosticCenter> setTestsToNull()
+	{
+		return centerService.setTestsToNull();
+	}
 
 }

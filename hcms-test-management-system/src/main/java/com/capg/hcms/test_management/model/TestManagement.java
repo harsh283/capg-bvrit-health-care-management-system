@@ -36,5 +36,10 @@ public class TestManagement {
 		this.testName = testName;
 	}
 
+	@Override
+	public String toString() {
+		return "TestManagement [testId=" + testId + ", testName=" + testName + "]";
+	}
+
 	
 }

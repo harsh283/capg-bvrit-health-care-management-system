@@ -17,6 +17,7 @@ package com.capg.hcms.appointmentmanagementsystem.model;
 		
 		private String userId;
 		@Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
 		private BigInteger appointmentId;
 		private String testId;
 		@DateTimeFormat(pattern = "yyyy/MM/ddThh:mm")

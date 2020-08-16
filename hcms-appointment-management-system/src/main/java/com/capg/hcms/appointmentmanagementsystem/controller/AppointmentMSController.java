@@ -23,7 +23,7 @@ import com.capg.hcms.appointmentmanagementsystem.service.IAppointmentMSService;
 
 
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/appointmentuser")
 public class AppointmentMSController {
 
 	@Autowired

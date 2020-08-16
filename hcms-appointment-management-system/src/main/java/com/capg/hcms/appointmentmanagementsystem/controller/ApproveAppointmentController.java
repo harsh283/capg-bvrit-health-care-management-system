@@ -20,7 +20,7 @@ import com.capg.hcms.appointmentmanagementsystem.service.IAppointmentMSService;
 
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/appointmentadmin")
 public class ApproveAppointmentController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class ApproveAppointmentController {
 		return service.getAllAppointments();
 	}
 
-	@PutMapping("/approveAppointment/{appointmentId}/{status}")
+	@PutMapping("/approveAppointment/{appointmentId}/status/{status}")
 	public Appointment approveAppoinment(@PathVariable BigInteger appointmentId, @PathVariable boolean status) {
 		Appointment appointment = service.getAppointment(appointmentId);
 		return service.approveAppointment(appointment, status);

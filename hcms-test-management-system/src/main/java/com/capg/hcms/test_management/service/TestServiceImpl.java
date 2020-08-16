@@ -1,6 +1,8 @@
 package com.capg.hcms.test_management.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,8 @@ public class TestServiceImpl implements ITestService{
 
 	@Autowired
 	TestRepo testRepo;
-	
+	@Autowired
+	private Random random;
 	@Override
 	public TestManagement addTest(TestManagement test) throws TestIdAlreadyExistsException {
 		if(testRepo.existsById(test.getTestId()))
@@ -94,5 +97,20 @@ throw new TestIdAlreadyExistsException("Test with testId" +test.getTestId()+" al
 		testRepo.deleteAll();
 		return true;
 	}
+
+	@Override
+	public List<TestManagement> addDefault() {
+		// TODO Auto-generated method stub
+		TestManagement test1=new TestManagement(String.valueOf(random.nextInt(1000)),"Blood Pressure");
+		TestManagement test2=new TestManagement(String.valueOf(random.nextInt(1000)),"Blood Sugar");
+		
+		List<TestManagement> testList=new ArrayList();
+		testList.add(test1);
+		testList.add(test2);
+		testRepo.save(test1);
+		testRepo.save(test2);
+		return testList;
+	}
+	
 	
 }

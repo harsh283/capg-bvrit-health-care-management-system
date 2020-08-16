@@ -20,6 +20,6 @@ public interface ITestService {
 	
 	public TestManagement updateTest(TestManagement test)throws TestIdDoesNotExistException;
 
-	
+	public List<TestManagement> addDefault();
 	
 }

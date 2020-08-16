@@ -16,7 +16,7 @@ import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoes
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
+	@ResponseStatus(code=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value= {NoCentersAreAvailableException.class})
 	public ErrorInfo handleTraineeAlreadyExistsException(NoCentersAreAvailableException ex , HttpServletRequest req)
 	{

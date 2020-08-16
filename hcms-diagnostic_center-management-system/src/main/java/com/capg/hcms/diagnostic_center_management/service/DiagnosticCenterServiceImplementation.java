@@ -22,12 +22,14 @@ private DiagnosticCenterRepo repository;
 @Override
 public DiagnosticCenter getCenterById(String centerId) throws SpecifiedCenterDoesnotExistException {
 	// TODO Auto-generated method stub
-	DiagnosticCenter existingCenter=repository.getOne(centerId);
-	if(existingCenter==null)
+	boolean existingCenter = repository.existsById(centerId);
+	if(existingCenter)
 	{
-		throw new SpecifiedCenterDoesnotExistException("Center with center id "+centerId+"Doesnot exist");
+		DiagnosticCenter center = repository.getOne(centerId);
+		return center;
 	}
-	return existingCenter;
+	throw new SpecifiedCenterDoesnotExistException("Center with center id "+centerId+"Doesnot exist");
+	
 }
 @Override
 public List<DiagnosticCenter> getAllCenters() throws NoCentersAreAvailableException {
@@ -117,4 +119,17 @@ public boolean removeTestId(String centerId, String testId) {
 	return true;
 
 }
+@Override
+public List<DiagnosticCenter> setTestsToNull() {
+	// TODO Auto-generated method stub
+	List<DiagnosticCenter> centerList=repository.findAll();
+	for (DiagnosticCenter diagnosticCenter : centerList) {
+		diagnosticCenter.setTests(null);
+		repository.save(diagnosticCenter);
+	}
+	List<DiagnosticCenter> nullTestList=repository.findAll();
+	
+	return nullTestList;
+}
+
 }
