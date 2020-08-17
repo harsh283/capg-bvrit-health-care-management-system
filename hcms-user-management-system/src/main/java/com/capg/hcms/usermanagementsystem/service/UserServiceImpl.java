@@ -43,7 +43,7 @@ public class UserServiceImpl implements IUserService{
 	  UserPasswordInvalidException,UserEmailInvalidException, UserNumberInvalidException
 	  ,UserNameAlreadyExistException,EmailAlreadyExistException 
 	     {
-		user.setUserRole("user");
+		
 		Pattern p1=Pattern.compile("[A-Z]{1}[a-zA-Z0-9]{6,14}$");
 		Matcher m1=p1.matcher(user.getUserName());
 		Pattern p2=Pattern.compile("^(?=.*[0-9])"
@@ -82,7 +82,7 @@ public class UserServiceImpl implements IUserService{
 		
 		else if(userRepo.getUserByUserEmail(user.getUserEmail())!=null)
 			throw new EmailAlreadyExistException("User with Email "+user.getUserEmail()+" already exist");
-		else
+		 else
 		     userRepo.save(user);
 		return user;
 			
