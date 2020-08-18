@@ -3,6 +3,9 @@ package com.capg.hcms.usermanagementsystem.model;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
+import javax.annotation.Generated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.format.annotation.DateTimeFormat;

@@ -25,7 +25,7 @@ public class ErrorController {
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
 
-	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
+	@ResponseStatus(code=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value= {AppointmentNotFoundException.class})
 	public ErrorInfo AppointmentNotFound(AppointmentNotFoundException ex , HttpServletRequest req)
 	{

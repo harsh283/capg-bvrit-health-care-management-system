@@ -46,10 +46,7 @@ public class UserServiceImpl implements IUserService{
 		
 		Pattern p1=Pattern.compile("[A-Z]{1}[a-zA-Z0-9]{6,14}$");
 		Matcher m1=p1.matcher(user.getUserName());
-		Pattern p2=Pattern.compile("^(?=.*[0-9])"
-                + "(?=.*[a-z])(?=.*[A-Z])"
-                + "(?=.*[@#$%^&+=])"
-                + "(?=\\S+$).{8,20}$");
+		Pattern p2=Pattern.compile("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$");
 		Matcher m2=p2.matcher(user.getUserPassword());
 		Pattern p3=Pattern.compile("^(.+)@(.+)$");
 		Matcher m3=p3.matcher(user.getUserEmail());
@@ -90,6 +87,11 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public boolean deleteUser(String userId) {
+		User user = userRepo.getOne(userId);
+		if(user==null)
+		{
+			throw new UserNotFoundException("User Doesnot exist");
+		}
 		userRepo.deleteById(userId);
 		return true;
 	}
@@ -97,6 +99,10 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public User updateUser(User user) {
 		User existingUser=userRepo.getOne(user.getUserId());
+		if(existingUser==null)
+		{
+			throw new UserNotFoundException("User Doesnot exist");
+		}
 		existingUser.setUserName(user.getUserName());
 		existingUser.setUserPassword(user.getUserPassword());
 		existingUser.setUserRole(user.getUserRole());
@@ -117,13 +123,19 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public List<User> getAllUsers() {
-		
+		if(userRepo.findAll().isEmpty())
+		{
+			throw new UserNotFoundException("Users unaivailable");
+		}
 		return userRepo.findAll();
 	}
 
 	@Override
 	public boolean deleteAllUsers() {
-		
+		if(userRepo.findAll().isEmpty())
+		{
+			throw new UserNotFoundException("Users unaivailable");
+		}
 		 userRepo.deleteAll();
 		 return true;
 	}
@@ -133,18 +145,18 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public DiagnosticCenter addCenter(DiagnosticCenter center) {
 		// TODO Auto-generated method stub
-		ResponseEntity<List<TestManagement>> testManage=restTemplate.exchange("http://localhost:8100/add-default", HttpMethod.GET,null,new ParameterizedTypeReference<List<TestManagement>>() {
+		ResponseEntity<List<TestManagement>> testManage=restTemplate.exchange("http://hcms-diagnostic-test-management-system/test/add-default", HttpMethod.GET,null,new ParameterizedTypeReference<List<TestManagement>>() {
 		});
-		List<TestManagement> listtest=testManage.getBody();
+		List<TestManagement> listTest=testManage.getBody();
 		/* System.out.println(listtest); */
 		List<String> lists=new ArrayList();
-		lists.add(listtest.get(0).getTestId());
-		lists.add(listtest.get(1).getTestId());
+		lists.add(listTest.get(0).getTestId());
+		lists.add(listTest.get(1).getTestId());
 		String neededId=center.getCenterId();
 		center.setTests(lists);
 		
 		
-		DiagnosticCenter centerPosted=restTemplate.postForObject("http://localhost:8090/addcenter", center, DiagnosticCenter.class);
+		DiagnosticCenter centerPosted=restTemplate.postForObject("http://hcms-diagnostic-center-management-system/center/addcenter", center, DiagnosticCenter.class);
 		
 		
 		return centerPosted;
@@ -166,7 +178,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public List<DiagnosticCenter> getAllCenters() {
 		// TODO Auto-generated method stub
-		ResponseEntity<List<DiagnosticCenter>> centerEntity=restTemplate.exchange("http://localhost:8090/getallcenters", HttpMethod.GET,null,new ParameterizedTypeReference<List<DiagnosticCenter>>() {
+		ResponseEntity<List<DiagnosticCenter>> centerEntity=restTemplate.exchange("http://hcms-diagnostic-center-management-system/center/getallcenters", HttpMethod.GET,null,new ParameterizedTypeReference<List<DiagnosticCenter>>() {
 		});
 		List<DiagnosticCenter> centerList=centerEntity.getBody();
 		return centerList;
@@ -175,28 +187,28 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public boolean deleteAllCenters() {
 		// TODO Auto-generated method stub
-		restTemplate.delete("http://localhost:8090/removeAll");
+		restTemplate.delete("http://hcms-diagnostic-center-management-system/center/removeAll");
 		return true;
 	}
 
 	@Override
 	public DiagnosticCenter getCenterById(String centerId) {
 		// TODO Auto-generated method stub
-		DiagnosticCenter center=restTemplate.getForObject("http://localhost:8090/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
+		DiagnosticCenter center=restTemplate.getForObject("http://hcms-diagnostic-center-management-system/center/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
 		return center;
 	}
 
 	@Override
 	public boolean deleteCenterById(String centerId) {
 		// TODO Auto-generated method stub
-		restTemplate.delete("http://localhost:8090/removecenter/centerId/"+centerId);
+		restTemplate.delete("http://hcms-diagnostic-center-management-system/center/removecenter/centerId/"+centerId);
 		return true;
 	}
 
 	@Override
 	public List<TestManagement> getAllTests() {
 		// TODO Auto-generated method stub
-		ResponseEntity<List<TestManagement>> testEntity=restTemplate.exchange("http://localhost:8100/getAll", HttpMethod.GET,null,new ParameterizedTypeReference<List<TestManagement>>() {
+		ResponseEntity<List<TestManagement>> testEntity=restTemplate.exchange("http://hcms-diagnostic-test-management-system/test/getAll", HttpMethod.GET,null,new ParameterizedTypeReference<List<TestManagement>>() {
 		});
 		List<TestManagement> testList=testEntity.getBody();
 		return testList;
@@ -205,27 +217,26 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public TestManagement addTest(String centerId,TestManagement newTest)  {
 		// TODO Auto-generated method stub
-		DiagnosticCenter center=restTemplate.getForObject("http://localhost:8090/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
+		DiagnosticCenter center=restTemplate.getForObject("http://hcms-diagnostic-center-management-system/center/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
 		center.getTests().add(newTest.getTestId());
-		restTemplate.put((
-				 "http://localhost:8090/addtestid/"+centerId+"/testId/"+newTest.getTestId()), null);
-		TestManagement  addedTest=restTemplate.postForObject("http://localhost:8100/addTest",newTest,TestManagement.class);
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addtestid/"+centerId+"/testId/"+newTest.getTestId()), null);
+		TestManagement  addedTest=restTemplate.postForObject("http://hcms-diagnostic-test-management-system/test/addTest",newTest,TestManagement.class);
 		return  addedTest;
 	}
 
 	@Override
 	public boolean deleteTestById(String centerId, String testId) {
 		// TODO Auto-generated method stub
-		DiagnosticCenter center= restTemplate.getForObject("http://localhost:8090/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
-		restTemplate.delete("http://localhost:8100/deleteTest/id/"+testId);
-		restTemplate.put(("http://localhost:8090/remove-testid/"+centerId+"/test-id/"+testId), null);
+		DiagnosticCenter center= restTemplate.getForObject("http://hcms-diagnostic-center-management-system/center/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
+		restTemplate.delete("http://hcms-diagnostic-test-management-system/test/deleteTest/id/"+testId);
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/remove-testid/"+centerId+"/test-id/"+testId), null);
 		return true;
 	}
 
 	@Override
 	public TestManagement getTestById(String testId) {
 		// TODO Auto-generated method stub
-		TestManagement existingTest=restTemplate.getForObject("http://localhost:8100/getTest/id/"+testId, TestManagement.class);
+		TestManagement existingTest=restTemplate.getForObject("http://hcms-diagnostic-test-management-system/test/getTest/id/"+testId, TestManagement.class);
 		return existingTest;
 	}
 
@@ -233,19 +244,19 @@ public class UserServiceImpl implements IUserService{
 	public boolean deleteAllTests() {
 		// TODO Auto-generated method stub
 		
-		restTemplate.delete("http://localhost:8100/deleteAll");
+		restTemplate.delete("http://hcms-diagnostic-test-management-system/test/deleteAll");
 	//	restTemplate.delete("http://localhost:8090/removealltests");
-		ResponseEntity<List<DiagnosticCenter>> centerEntity=restTemplate.exchange("http://localhost:8090/removealltests", HttpMethod.GET,null,new ParameterizedTypeReference<List<DiagnosticCenter>>() {});
+		ResponseEntity<List<DiagnosticCenter>> centerEntity=restTemplate.exchange("http://hcms-diagnostic-center-management-system/center/removealltests", HttpMethod.GET,null,new ParameterizedTypeReference<List<DiagnosticCenter>>() {});
 		List<DiagnosticCenter> centerList=centerEntity.getBody();
 		return true;
 	}
 
 	@Override
 	public Appointment makeAppointment(String centerId,Appointment appointment) {
-		// TODO Auto-generated method stub
-		Appointment newappointment = restTemplate.postForObject("http://localhost:8300/appointmentuser/makeappointment",appointment, Appointment.class);
+		
+		Appointment newappointment = restTemplate.postForObject("http://hcms-appointment-management-system/appointmentuser/makeappointment",appointment, Appointment.class);
 
-		restTemplate.put(("http://localhost:8090/addappointmentid/"+centerId+"/appointmentid/"+ newappointment.getAppointmentId()), null);
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addappointmentid/"+centerId+"/appointmentid/"+ newappointment.getAppointmentId()), null);
 
 		return newappointment;
 		
@@ -254,7 +265,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public List<Appointment> getAllAppointments() {
 		// TODO Auto-generated method stub
-		ResponseEntity<List<Appointment>> appointmentEntity=restTemplate.exchange("http://localhost:8300/appointmentuser/getallappointments", HttpMethod.GET,null,new ParameterizedTypeReference<List<Appointment>>() {
+		ResponseEntity<List<Appointment>> appointmentEntity=restTemplate.exchange("http://hcms-appointment-management-system/appointmentuser/getallappointments", HttpMethod.GET,null,new ParameterizedTypeReference<List<Appointment>>() {
 		});
 		List<Appointment> appointmentList=appointmentEntity.getBody();
 		return appointmentList;
@@ -264,9 +275,9 @@ public class UserServiceImpl implements IUserService{
 	public Appointment approveAppointment(BigInteger appointmentId, boolean status) {
 		// TODO Auto-generated method stub
 		List<Appointment> appointmentList=getAllAppointments();
-		System.out.println("dasghfkjlg;;sdjkfglgsdfgl;kjasdkflgl;df;lkj"+appointmentList);
-		restTemplate.put("http://localhost:8300/appointmentadmin/approveAppointment/" + appointmentId + "/status/" + status, null);
-		Appointment approvee= restTemplate.getForObject("http://localhost:8300/appointmentadmin/getAppointment/" + appointmentId,
+		//System.out.println("dasghfkjlg;;sdjkfglgsdfgl;kjasdkflgl;df;lkj"+appointmentList);
+		restTemplate.put("http://hcms-appointment-management-system/appointmentadmin/approveAppointment/" + appointmentId + "/status/" + status, null);
+		Appointment approvee= restTemplate.getForObject("http://hcms-appointment-management-system/appointmentadmin/getAppointment/" + appointmentId,
 				Appointment.class);
 //List<Appointment> appointmentList=getAllAppointments();
 //System.out.println(appointmentList);

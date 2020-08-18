@@ -1,6 +1,7 @@
 package com.capg.hcms.usermanagementsystem.controller;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.capg.hcms.usermanagementsystem.model.DiagnosticCenter;
 import com.capg.hcms.usermanagementsystem.model.TestManagement;
 import com.capg.hcms.usermanagementsystem.model.User;
 import com.capg.hcms.usermanagementsystem.service.IUserService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("/admin")
@@ -55,6 +57,7 @@ public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center)
 return userService.addCenter(center);
 
 }
+
 @GetMapping("/getallcenters")
 public List<DiagnosticCenter> getAllCenters()
 {
@@ -70,15 +73,23 @@ public DiagnosticCenter getCenterById(@PathVariable String centerId)
 {
 return userService.getCenterById(centerId);	
 }
+
 @DeleteMapping("/deletecenter/centerid/{centerId}")
 public boolean deleteCenterById(@PathVariable String centerId)
 {
 return userService.deleteCenterById(centerId);	
 }
+@HystrixCommand(fallbackMethod = "allTestsFallBack")
 @GetMapping("/getalltests")
 	public List<TestManagement> getAllTests(){
 		return userService.getAllTests();
 	}
+public List<TestManagement> allTestsFallBack()
+{
+	List<TestManagement> testList=new ArrayList();
+	testList.add(new TestManagement("143","blood test"));
+return null;	
+}
 @PostMapping("/addtest/centerid/{centerId}")
 public TestManagement addTest(@PathVariable String centerId,@RequestBody TestManagement newTest) 
 	{
