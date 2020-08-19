@@ -32,7 +32,7 @@ public class AppointmentMSServiceImpl implements IAppointmentMSService {
 	    {
 			throw new SlotNotAvailableException("This slot is not available");
 		}
-	    System.out.println(appointment);
+	   // System.out.println(appointment);
 		Appointment app=appointmentRepo.save(appointment);
 	return app;
 	}

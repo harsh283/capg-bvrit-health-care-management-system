@@ -160,11 +160,7 @@ public class UserServiceImpl implements IUserService{
 		
 		
 		return centerPosted;
-		/*
-		 * restTemplate.put((
-		 * "http://localhost:8090/addtestid/"+neededId+"/testId/"+listtest.get(1).
-		 * getTestId()),null );
-		 */
+		
 		
 		
 				/*
@@ -267,10 +263,7 @@ public class UserServiceImpl implements IUserService{
 	public Appointment makeAppointment(String centerId,Appointment appointment) {
 		
 		Appointment newappointment = restTemplate.postForObject("http://hcms-appointment-management-system/appointmentuser/makeappointment",appointment, Appointment.class);
-System.out.println("frfghj");
-System.out.println("dfghjkl;kjhgdfghjkl;tfghjkl;khgfdghj"+newappointment.getAppointmentId());
-System.out.println(newappointment);
-System.out.println(centerId);
+
 		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addappointmentid/"+centerId+"/appointmentid/"+ newappointment.getAppointmentId()), DiagnosticCenter.class);
 
 		return newappointment;
@@ -296,19 +289,9 @@ System.out.println(centerId);
 				Appointment.class);
 //List<Appointment> appointmentList=getAllAppointments();
 //System.out.println(appointmentList);
-
-	
-	
-
 return approvee;
 	
 		
 	}
 	
-	
-	
-	
-	
-	
-
 }

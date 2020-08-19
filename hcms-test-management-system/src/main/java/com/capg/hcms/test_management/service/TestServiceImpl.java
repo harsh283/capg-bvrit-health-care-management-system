@@ -75,7 +75,7 @@ throw new TestIdAlreadyExistsException("Test with testId" +test.getTestId()+" al
 		String testId =test.getTestId();
 		if(testRepo.existsById(testId))
 		{
-			TestManagement upadatetest=testRepo.findById(testId).get();
+			TestManagement upadateTest=testRepo.findById(testId).get();
 			testRepo.saveAndFlush(test);
 		}
 		else

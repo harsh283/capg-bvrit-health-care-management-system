@@ -14,7 +14,7 @@ public class Appointment {
 	private String userId;
 	private BigInteger appointmentId;
 	private String testId;
-//	@DateTimeFormat(pattern = "yyyy/MM/ddThh:mm")
+
 	private String dateTime;
 	private boolean approved = false;
 	

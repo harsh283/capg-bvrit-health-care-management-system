@@ -64,7 +64,6 @@ public DiagnosticCenter addCenter(DiagnosticCenter center) throws CenterAlreadyE
 public boolean removeAllCenters() throws NoCentersAreAvailableException {
 	// TODO Auto-generated method stub
 	List<DiagnosticCenter> centerList=repository.findAll();
-	System.out.println(centerList);
 	if(centerList.isEmpty())
 	{
 		
@@ -97,8 +96,6 @@ public DiagnosticCenter addTestId(String centerId, String testId) throws CenterA
 		throw new CenterAlreadyExistsException("Center with specified centerId unavailable");
 	}
 	existingCenter.getTests().add(testId);
-	
-
 	return repository.save(existingCenter);
 }
 @Override
