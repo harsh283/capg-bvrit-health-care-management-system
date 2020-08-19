@@ -1,7 +1,7 @@
 package com.capg.hcms.diagnostic_center_management.model;
 
 import java.math.BigInteger;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -17,9 +17,9 @@ public class DiagnosticCenter {
 private String centerId;
 private String centerName;
 @ElementCollection
-private List<String> tests;
+private List<String> tests=new ArrayList<>();
 @ElementCollection
-private List<BigInteger> appointments;
+private List<BigInteger> appointments=new ArrayList<>();
 public DiagnosticCenter() {
 	super();
 	// TODO Auto-generated constructor stub

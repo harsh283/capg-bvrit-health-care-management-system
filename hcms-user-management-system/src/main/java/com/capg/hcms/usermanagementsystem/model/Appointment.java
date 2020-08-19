@@ -14,15 +14,15 @@ public class Appointment {
 	private String userId;
 	private BigInteger appointmentId;
 	private String testId;
-	@DateTimeFormat(pattern = "yyyy/MM/ddThh:mm")
-	private LocalDateTime dateTime;
+//	@DateTimeFormat(pattern = "yyyy/MM/ddThh:mm")
+	private String dateTime;
 	private boolean approved = false;
 	
 	public Appointment() {
 		super();
 	}
 	
-	public Appointment(String userId, BigInteger appointmentId, String testId, LocalDateTime dateTime,
+	public Appointment(String userId, BigInteger appointmentId, String testId, String dateTime,
 			boolean approved) {
 		super();
 		this.userId = userId;
@@ -49,10 +49,10 @@ public class Appointment {
 	public void setTestId(String testId) {
 		this.testId = testId;
 	}
-	public LocalDateTime getDateTime() {
+	public String getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(LocalDateTime dateTime) {
+	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
 	public boolean isApproved() {

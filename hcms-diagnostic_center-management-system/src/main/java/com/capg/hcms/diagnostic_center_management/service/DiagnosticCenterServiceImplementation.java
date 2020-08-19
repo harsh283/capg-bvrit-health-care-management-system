@@ -1,6 +1,7 @@
 package com.capg.hcms.diagnostic_center_management.service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -104,7 +105,17 @@ public DiagnosticCenter addTestId(String centerId, String testId) throws CenterA
 public DiagnosticCenter addAppointmentId(String centerId, BigInteger appointmentId) {
 	// TODO Auto-generated method stub
 	DiagnosticCenter existingCenter=repository.getOne(centerId);
-	existingCenter.getAppointments().add(appointmentId);
+	List<BigInteger> appointmentList=new ArrayList<>();
+	if(existingCenter.getAppointments()==null)
+	{
+		appointmentList.add(appointmentId);
+	existingCenter.setAppointments(appointmentList);
+	}
+	else
+	{
+		existingCenter.getAppointments().add(appointmentId);
+	}
+	
 	return repository.save(existingCenter);
 }
 @Override

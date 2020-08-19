@@ -24,17 +24,17 @@ public class AppointmentMSServiceImpl implements IAppointmentMSService {
 
 	@Override
 	public Appointment makeAppointment(Appointment appointment) {
-		
+	
 		LocalTime time=appointment.getDateTime().toLocalTime();
 
 		
-	    if ((appointmentRepo.getAppointmentByDateTimeAndTestId(appointment.getDateTime(), appointment.getTestId())!=null)
-	    	||appointment.getDateTime().isBefore(LocalDateTime.now().plusHours(1))||appointment.getDateTime().isAfter(LocalDateTime.now().plusMonths(3))
-	    	||time.isBefore(LocalTime.of(6, 59))||time.isAfter(LocalTime.of(21, 00))) 
+	    if ((appointmentRepo.getAppointmentByDateTimeAndTestId(appointment.getDateTime(), appointment.getTestId())!=null)||appointment.getDateTime().isBefore(LocalDateTime.now().plusHours(1))||appointment.getDateTime().isAfter(LocalDateTime.now().plusMonths(3))||time.isBefore(LocalTime.of(6, 59))||time.isAfter(LocalTime.of(21, 00))) 
 	    {
 			throw new SlotNotAvailableException("This slot is not available");
 		}
-		return appointmentRepo.save(appointment);
+	    System.out.println(appointment);
+		Appointment app=appointmentRepo.save(appointment);
+	return app;
 	}
 
 	@Override

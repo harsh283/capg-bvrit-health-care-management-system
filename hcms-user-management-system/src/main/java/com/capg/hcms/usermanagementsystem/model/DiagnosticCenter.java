@@ -1,6 +1,7 @@
 package com.capg.hcms.usermanagementsystem.model;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,8 +10,8 @@ public class DiagnosticCenter {
    
 	private String centerId;
 	private String centerName;
-	private List<String> tests;
-	private List<BigInteger> appointments;
+	private List<String> tests=new ArrayList<String>();
+	private List<BigInteger> appointments=new ArrayList<>();
 	public DiagnosticCenter() {
 		super();
 		

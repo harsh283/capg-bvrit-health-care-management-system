@@ -217,9 +217,21 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public TestManagement addTest(String centerId,TestManagement newTest)  {
 		// TODO Auto-generated method stub
+		//System.out.println("gfdgfh");
 		DiagnosticCenter center=restTemplate.getForObject("http://hcms-diagnostic-center-management-system/center/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
-		center.getTests().add(newTest.getTestId());
-		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addtestid/"+centerId+"/testId/"+newTest.getTestId()), null);
+		//System.out.println(center);
+		
+		if(center.getTests()==null)
+		{
+			List<String> testList=new ArrayList<>();
+			testList.add(newTest.getTestId());	
+		center.setTests(testList);
+		}
+		else
+		{
+			center.getTests().add(newTest.getTestId());
+		}
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addtestid/"+centerId+"/testId/"+newTest.getTestId()), DiagnosticCenter.class);
 		TestManagement  addedTest=restTemplate.postForObject("http://hcms-diagnostic-test-management-system/test/addTest",newTest,TestManagement.class);
 		return  addedTest;
 	}
@@ -255,8 +267,11 @@ public class UserServiceImpl implements IUserService{
 	public Appointment makeAppointment(String centerId,Appointment appointment) {
 		
 		Appointment newappointment = restTemplate.postForObject("http://hcms-appointment-management-system/appointmentuser/makeappointment",appointment, Appointment.class);
-
-		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addappointmentid/"+centerId+"/appointmentid/"+ newappointment.getAppointmentId()), null);
+System.out.println("frfghj");
+System.out.println("dfghjkl;kjhgdfghjkl;tfghjkl;khgfdghj"+newappointment.getAppointmentId());
+System.out.println(newappointment);
+System.out.println(centerId);
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addappointmentid/"+centerId+"/appointmentid/"+ newappointment.getAppointmentId()), DiagnosticCenter.class);
 
 		return newappointment;
 		
