@@ -1,22 +1,18 @@
 package com.capg.hcms.usermanagementsystem.service;
 
 import java.math.BigInteger;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.EmailAlreadyExistException;
@@ -35,9 +31,11 @@ import com.capg.hcms.usermanagementsystem.repo.UserRepo;
 @Service
 public class UserServiceImpl implements IUserService{
 	@Autowired
-	UserRepo userRepo;
+	private UserRepo userRepo;
 	@Autowired
-	RestTemplate restTemplate;
+	private Random random;
+	@Autowired
+	private RestTemplate restTemplate;
 	@Override
 	public User registerUser(User user) throws UserNameInvalidException, 
 	  UserPasswordInvalidException,UserEmailInvalidException, UserNumberInvalidException
@@ -80,6 +78,7 @@ public class UserServiceImpl implements IUserService{
 		else if(userRepo.getUserByUserEmail(user.getUserEmail())!=null)
 			throw new EmailAlreadyExistException("User with Email "+user.getUserEmail()+" already exist");
 		 else
+			 user.setUserId(String.valueOf(random.nextInt(100000)).substring(0, 5));
 		     userRepo.save(user);
 		return user;
 			
