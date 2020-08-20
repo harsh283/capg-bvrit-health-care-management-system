@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
-	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
+	@ResponseStatus(code=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value= {SpecifiedCenterDoesnotExistException.class})
 	public ErrorInfo handleSpecifiedCenterDoesnotExistException(SpecifiedCenterDoesnotExistException ex , HttpServletRequest req)
 	{

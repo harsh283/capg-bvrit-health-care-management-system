@@ -18,7 +18,7 @@ import com.capg.hcms.appointmentmanagementsystem.Exception.SlotNotAvailableExcep
 
 @RestControllerAdvice
 public class ErrorController {
-	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
+	@ResponseStatus(code=HttpStatus.NOT_ACCEPTABLE)
 	@ExceptionHandler(value= {AppointmentAlreadyApprovedException.class})
 	public ErrorInfo handleAppointmentAlreadyApproved(AppointmentAlreadyApprovedException ex , HttpServletRequest req)
 	{
@@ -31,7 +31,7 @@ public class ErrorController {
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
-	@ResponseStatus(code=HttpStatus.BAD_GATEWAY)
+	@ResponseStatus(code=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value= {SlotNotAvailableException.class})
 	public ErrorInfo SlotNotAvailable(SlotNotAvailableException ex , HttpServletRequest req)
 	{
