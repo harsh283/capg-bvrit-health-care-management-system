@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
+import com.capg.hcms.diagnostic_center_management.exceptions.CenterNameAlreadyExistsException;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
 import com.capg.hcms.diagnostic_center_management.model.DiagnosticCenter;
@@ -37,7 +38,7 @@ public class DiagnosticCenterController {
 		return centerService.getAllCenters();
 	}
 	@PostMapping("/addcenter")
-	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws CenterAlreadyExistsException
+	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws  NoCentersAreAvailableException, CenterNameAlreadyExistsException, CenterAlreadyExistsException
 	{
 	
 		return centerService.addCenter(center);

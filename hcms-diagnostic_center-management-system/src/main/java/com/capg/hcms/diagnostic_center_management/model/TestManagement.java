@@ -8,7 +8,7 @@ private String testId;
 private String testName;
 public TestManagement() {
 	super();
-	// TODO Auto-generated constructor stub
+	
 }
 public TestManagement(String testId, String testName) {
 	super();

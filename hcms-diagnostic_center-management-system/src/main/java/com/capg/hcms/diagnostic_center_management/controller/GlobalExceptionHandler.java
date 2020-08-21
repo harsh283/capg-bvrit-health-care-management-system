@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.capg.hcms.diagnostic_center_management.exceptions.CenterAlreadyExistsException;
+import com.capg.hcms.diagnostic_center_management.exceptions.CenterNameAlreadyExistsException;
 import com.capg.hcms.diagnostic_center_management.exceptions.ErrorInfo;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
@@ -18,7 +19,7 @@ import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoes
 public class GlobalExceptionHandler {
 	@ResponseStatus(code=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value= {NoCentersAreAvailableException.class})
-	public ErrorInfo handleTraineeAlreadyExistsException(NoCentersAreAvailableException ex , HttpServletRequest req)
+	public ErrorInfo handleCenterAlreadyExistsException(NoCentersAreAvailableException ex , HttpServletRequest req)
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
@@ -31,6 +32,12 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(value= {CenterAlreadyExistsException.class})
 	public ErrorInfo handleCenterAlreadyExistsException(CenterAlreadyExistsException ex , HttpServletRequest req)
+	{
+		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
+	}
+	@ResponseStatus(code=HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value= {CenterNameAlreadyExistsException.class})
+	public ErrorInfo handleCenterNameAlreadyExistsException(CenterNameAlreadyExistsException ex , HttpServletRequest req)
 	{
 		return new ErrorInfo(LocalDateTime.now(), ex.getMessage(),req.getRequestURI().toString());
 	}
