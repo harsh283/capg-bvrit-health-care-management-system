@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.hcms.appointmentmanagementsystem.model.Appointment;
-import com.capg.hcms.appointmentmanagementsystem.model.AppointmentList;
-
 import com.capg.hcms.appointmentmanagementsystem.service.IAppointmentMSService;
 
+/*******************************************************************************************************************************
+-Author                   :     Ravali Bondugula
+-Created/Modified Date    :     
+-Description              :     ApproveAppointmentController Class for accessing Appointment Management System services
+*******************************************************************************************************************************/
 
 @RestController
 @RequestMapping("/appointmentadmin")

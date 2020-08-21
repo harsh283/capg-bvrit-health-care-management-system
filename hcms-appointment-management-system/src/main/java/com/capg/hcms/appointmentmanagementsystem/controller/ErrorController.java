@@ -14,6 +14,11 @@ import com.capg.hcms.appointmentmanagementsystem.Exception.AppointmentNotFoundEx
 import com.capg.hcms.appointmentmanagementsystem.Exception.ErrorInfo;
 import com.capg.hcms.appointmentmanagementsystem.Exception.SlotNotAvailableException;
 
+/*******************************************************************************************************************************
+-Author                   :     Ravali Bondugula
+-Created/Modified Date    :     
+-Description              :     ErrorController Class for handling Appointment Management System Exceptions
+*******************************************************************************************************************************/
 
 
 @RestControllerAdvice

@@ -2,6 +2,13 @@ package com.capg.hcms.appointmentmanagementsystem.model;
 
 import java.util.List;
 
+/*******************************************************************************************************************************
+-Author                   :     Ravali Bondugula
+-Created/Modified Date    :     
+-Description              :     AppointmentList Bean Class for appointmentList property
+*******************************************************************************************************************************/
+
+
 
 public class AppointmentList {
 

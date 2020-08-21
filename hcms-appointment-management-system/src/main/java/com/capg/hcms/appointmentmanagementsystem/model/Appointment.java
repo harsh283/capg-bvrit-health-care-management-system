@@ -10,6 +10,13 @@ package com.capg.hcms.appointmentmanagementsystem.model;
 	import javax.persistence.Id;
 	import javax.persistence.Table;
 	import org.springframework.format.annotation.DateTimeFormat;
+	
+	/*******************************************************************************************************************************
+	-Author                   :     Ravali Bondugula
+	-Created/Modified Date    :     
+	-Description              :     Appointment Bean Class
+	*******************************************************************************************************************************/
+
 
 	@Entity
 	public class Appointment {
