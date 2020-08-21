@@ -13,7 +13,6 @@ public class User {
 	private String gender;
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public User(String userId, String userName, String userPassword, BigInteger contactNumber, String userEmail,
 			String userRole, Integer age, String gender) {

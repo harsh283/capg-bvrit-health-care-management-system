@@ -22,7 +22,6 @@ private List<String> tests=new ArrayList<>();
 private List<BigInteger> appointments=new ArrayList<>();
 public DiagnosticCenter() {
 	super();
-	// TODO Auto-generated constructor stub
 }
 public DiagnosticCenter(String centerId, String centerName, List<String> testList, List<BigInteger> appointments) {
 	super();

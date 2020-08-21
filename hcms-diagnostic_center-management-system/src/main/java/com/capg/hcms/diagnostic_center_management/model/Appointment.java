@@ -16,7 +16,6 @@ public class Appointment {
 	private boolean approved = false;
 	public Appointment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Appointment(String userId, BigInteger appointmentId, String testId, LocalDateTime dateTime,
 			boolean approved) {
