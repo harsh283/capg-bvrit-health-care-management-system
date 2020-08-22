@@ -3,6 +3,8 @@ package com.capg.hcms.usermanagementsystem.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.EmailAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
@@ -32,7 +34,7 @@ public interface IUserService {
 	public boolean deleteCenterById(String centerId);
 	
 	public List<TestManagement> getAllTests();
-	
+	public List<TestManagement> getAllTestsInACenter(String centerId);
 	public TestManagement addTest(String centerId, TestManagement newTest) ;
 	public  boolean deleteTestById(String centerId, String testId);
 	
@@ -43,4 +45,6 @@ public interface IUserService {
 	public List<Appointment> getAllAppointments();
 	
 	Appointment approveAppointment(BigInteger appointmentId, boolean status);
+	List<Appointment> getAllAppointmentsByCenterId( String centerId);
+	Appointment getAppointment(BigInteger appointmentId);
 }

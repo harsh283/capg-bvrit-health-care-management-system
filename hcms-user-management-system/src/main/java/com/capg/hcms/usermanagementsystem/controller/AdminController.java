@@ -93,6 +93,11 @@ public List<TestManagement> allTestsFallBack()
 	testList.add(new TestManagement("143","blood test"));
 return null;	
 }
+@GetMapping("/getalltests/centerid/{centerId}")
+public List<TestManagement> getAllTestsInACenter(@PathVariable String  centerId)
+{
+return userService.getAllTestsInACenter(centerId);	
+}
 @PostMapping("/addtest/centerid/{centerId}")
 public TestManagement addTest(@PathVariable String centerId,@RequestBody TestManagement newTest) 
 	{
@@ -125,6 +130,10 @@ public Appointment approveAppointment(@PathVariable BigInteger appointmentId,@Pa
 {
 	return userService.approveAppointment(appointmentId, status);
 }
-
+@GetMapping("/getappointmentsbycenterid/{centerId}")
+public List<Appointment> getAllAppointmentsByCenterId(@PathVariable String centerId)
+{
+	return userService.getAllAppointmentsByCenterId(centerId);
+}
 
 }

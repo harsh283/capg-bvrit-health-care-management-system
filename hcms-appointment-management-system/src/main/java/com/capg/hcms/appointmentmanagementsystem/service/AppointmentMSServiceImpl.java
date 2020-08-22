@@ -139,4 +139,5 @@ public class AppointmentMSServiceImpl implements IAppointmentMSService {
 		appointmentRepo.deleteById(appointmentId);
 		return true;
 	}
+    
 }

@@ -208,6 +208,7 @@ public class UserServiceImpl implements IUserService{
 		List<TestManagement> testList=testEntity.getBody();
 		return testList;
 	}
+	
 
 	@Override
 	public TestManagement addTest(String centerId,TestManagement newTest)  {
@@ -292,5 +293,52 @@ return approvee;
 	
 		
 	}
+
+	@Override
+	public List<TestManagement> getAllTestsInACenter(String centerId) {
+		System.out.println(centerId);
+		DiagnosticCenter center = getCenterById(centerId);
+
+		List<String> tests = center.getTests();
+		List<TestManagement> testList = new ArrayList<TestManagement>();
+
+		for (String testId : tests) {
+			testList.add(getTestById(testId));
+		}
+
+		List<TestManagement> diagnosticTestlist = new ArrayList(testList);
+		
+		return diagnosticTestlist;
+		
+	}
+
+	@Override
+	public List<Appointment> getAllAppointmentsByCenterId(String centerId) {
+		// TODO Auto-generated method stub
+		
+
+			DiagnosticCenter center = getCenterById(centerId);
+
+			List<BigInteger> appointments = center.getAppointments();
+			List<Appointment> appointmentList = new ArrayList<Appointment>();
+
+			for (BigInteger appointmentId : appointments) {
+				appointmentList.add(getAppointment(appointmentId));
+			}
+
+			List<Appointment>newAppointmentList = new ArrayList(appointmentList);
+
+			return newAppointmentList;
+		
+	}
+	@Override
+	public Appointment getAppointment(BigInteger appointmentId) {
+
+		return restTemplate.getForObject("http://hcms-appointment-management-system/appointmentadmin/getAppointment/" + appointmentId,
+				Appointment.class);
+
+	}
+
+	
 	
 }
