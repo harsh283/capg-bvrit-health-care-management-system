@@ -29,9 +29,9 @@ class HcmsUserManagementSystemApplicationTests {
 	@BeforeEach
 	public void init()
 	{	
-	   user1=new User("","Dhanush","Ravalibon@12",new BigInteger("9010330067"),"rava@gmail.com","user",21,"female");   
-	   user2=new User("","Praneetha","Dhanush@1",new BigInteger("9848969667"),"pranu@gmail.com","user",21,"female");
-	   user3=new User("","Pragnapadma","Pragnapadma@1",new BigInteger("9908596905"),"sindhu@gmail.com","user",21,"female");
+	   user1=new User("","Dhanush","Ravalibon@12",new BigInteger("9010330067"),"rava@gmail.com","user",21,"female","");   
+	   user2=new User("","Praneetha","Dhanush@1",new BigInteger("9848969667"),"pranu@gmail.com","user",21,"female","");
+	   user3=new User("","Pragnapadma","Pragnapadma@1",new BigInteger("9908596905"),"sindhu@gmail.com","user",21,"female","");
 	}
 
 	@Test

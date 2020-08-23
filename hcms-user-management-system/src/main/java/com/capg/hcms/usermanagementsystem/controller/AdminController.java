@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capg.hcms.usermanagementsystem.exceptions.PassKeyMisMatchException;
 import com.capg.hcms.usermanagementsystem.model.Appointment;
 import com.capg.hcms.usermanagementsystem.model.DiagnosticCenter;
 import com.capg.hcms.usermanagementsystem.model.TestManagement;
 import com.capg.hcms.usermanagementsystem.model.User;
+import com.capg.hcms.usermanagementsystem.model.UserCredentials;
 import com.capg.hcms.usermanagementsystem.service.IUserService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
@@ -28,7 +30,11 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 public class AdminController {
 	@Autowired
 	IUserService userService;
-	
+	@PostMapping("/public/authenticate")
+	public UserCredentials authenticateAdmin(@RequestBody UserCredentials userCredentials)
+	{
+		return userService.getUserCredentials(userCredentials);
+	}
 	
 
 	
@@ -135,5 +141,9 @@ public List<Appointment> getAllAppointmentsByCenterId(@PathVariable String cente
 {
 	return userService.getAllAppointmentsByCenterId(centerId);
 }
-
+@PostMapping("/registeradmin")
+public User registerAdmin(@RequestBody User user) throws PassKeyMisMatchException
+{
+return userService.registerAdmin(user);	
+}
 }

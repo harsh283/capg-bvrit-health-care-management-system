@@ -3,10 +3,9 @@ package com.capg.hcms.usermanagementsystem.service;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.EmailAlreadyExistException;
+import com.capg.hcms.usermanagementsystem.exceptions.PassKeyMisMatchException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameInvalidException;
@@ -15,6 +14,7 @@ import com.capg.hcms.usermanagementsystem.model.Appointment;
 import com.capg.hcms.usermanagementsystem.model.DiagnosticCenter;
 import com.capg.hcms.usermanagementsystem.model.TestManagement;
 import com.capg.hcms.usermanagementsystem.model.User;
+import com.capg.hcms.usermanagementsystem.model.UserCredentials;
 
 public interface IUserService {
 
@@ -47,4 +47,6 @@ public interface IUserService {
 	Appointment approveAppointment(BigInteger appointmentId, boolean status);
 	List<Appointment> getAllAppointmentsByCenterId( String centerId);
 	Appointment getAppointment(BigInteger appointmentId);
+	public User registerAdmin(User user) throws PassKeyMisMatchException;
+	public UserCredentials getUserCredentials(UserCredentials credentials );
 }

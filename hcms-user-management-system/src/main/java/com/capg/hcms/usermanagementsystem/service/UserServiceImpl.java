@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.EmailAlreadyExistException;
+import com.capg.hcms.usermanagementsystem.exceptions.PassKeyMisMatchException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameInvalidException;
@@ -26,6 +27,7 @@ import com.capg.hcms.usermanagementsystem.model.Appointment;
 import com.capg.hcms.usermanagementsystem.model.DiagnosticCenter;
 import com.capg.hcms.usermanagementsystem.model.TestManagement;
 import com.capg.hcms.usermanagementsystem.model.User;
+import com.capg.hcms.usermanagementsystem.model.UserCredentials;
 import com.capg.hcms.usermanagementsystem.repo.UserRepo;
 
 @Service
@@ -337,6 +339,45 @@ return approvee;
 		return restTemplate.getForObject("http://hcms-appointment-management-system/appointmentadmin/getAppointment/" + appointmentId,
 				Appointment.class);
 
+	}
+
+	@Override
+	public User registerAdmin(User user) throws PassKeyMisMatchException {
+		// TODO Auto-generated method stub
+		user.setUserRole("admin");
+		user.setUserId(String.valueOf(random.nextInt(1000)));
+		System.out.println(user);
+		if(user.getPassKey().equals("1223344"))
+		{
+			userRepo.save(user);
+		}
+		else
+		{
+			throw new PassKeyMisMatchException("INVALID PASSKEY");
+		}
+		return user;
+	}
+
+	@Override
+	public UserCredentials getUserCredentials(UserCredentials credentials) {
+		// TODO Auto-generated method stub
+	String id=credentials.getUserId()+"";
+	if(userRepo.existsById(id))
+	{
+		User user=userRepo.getOne(String.valueOf(credentials.getUserId()));
+		return new UserCredentials(Integer.parseInt(user.getUserId()),user.getUserPassword(),user.getUserRole());
+	 
+	}
+		
+		
+		
+		
+	/*	if(userRepo.getOne(String.valueOf(credentials.getUserId()))!=null)
+		{
+		User user=userRepo.getOne(String.valueOf(credentials.getUserId()));
+		return new UserCredentials(Integer.parseInt(user.getUserId()),user.getUserPassword(),user.getUserRole());
+		}*/
+	return null;
 	}
 
 	

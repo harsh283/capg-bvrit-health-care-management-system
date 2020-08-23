@@ -21,12 +21,12 @@ public class User {
 	private String userRole;
 	private Integer age;
 	private String gender;
-	
+	private String passKey;
 	public User() {
 		super();
 	}
 	public User(String userId, String userName, String userPassword, BigInteger contactNumber, String userEmail,
-			String userRole, Integer age, String gender) {
+			String userRole, Integer age, String gender,String passKey) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -36,6 +36,13 @@ public class User {
 		this.userRole = userRole;
 		this.age = age;
 		this.gender = gender;
+		this.passKey=passKey;
+	}
+	public String getPassKey() {
+		return passKey;
+	}
+	public void setPassKey(String passKey) {
+		this.passKey = passKey;
 	}
 	public String getUserId() {
 		return userId;
@@ -89,6 +96,7 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
 				+ ", contactNumber=" + contactNumber + ", userEmail=" + userEmail + ", userRole=" + userRole + ", age="
-				+ age + ", gender=" + gender + "]";
+				+ age + ", gender=" + gender + ", passKey=" + passKey + "]";
 	}
+
 }
