@@ -25,7 +25,7 @@ import com.capg.hcms.usermanagementsystem.service.IUserService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
@@ -99,10 +99,18 @@ public List<TestManagement> allTestsFallBack()
 	testList.add(new TestManagement("143","blood test"));
 return null;	
 }
+@HystrixCommand(fallbackMethod = "allTestsByCenterId")
 @GetMapping("/getalltests/centerid/{centerId}")
 public List<TestManagement> getAllTestsInACenter(@PathVariable String  centerId)
 {
 return userService.getAllTestsInACenter(centerId);	
+}
+public List<TestManagement> allTestsByCenterId(String centerId)
+{
+TestManagement test=new TestManagement("NOT AVAILABLE","NOT AVAILABLE");
+List<TestManagement> testList=new ArrayList<>();
+testList.add(test);
+return testList;
 }
 @PostMapping("/addtest/centerid/{centerId}")
 public TestManagement addTest(@PathVariable String centerId,@RequestBody TestManagement newTest) 
@@ -136,11 +144,14 @@ public Appointment approveAppointment(@PathVariable BigInteger appointmentId,@Pa
 {
 	return userService.approveAppointment(appointmentId, status);
 }
+
 @GetMapping("/getappointmentsbycenterid/{centerId}")
 public List<Appointment> getAllAppointmentsByCenterId(@PathVariable String centerId)
 {
 	return userService.getAllAppointmentsByCenterId(centerId);
 }
+
+
 @PostMapping("/registeradmin")
 public User registerAdmin(@RequestBody User user) throws PassKeyMisMatchException
 {

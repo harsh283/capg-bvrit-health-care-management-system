@@ -1,6 +1,7 @@
 package com.capg.hcms.usermanagementsystem.service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -320,10 +321,15 @@ return approvee;
 		
 
 			DiagnosticCenter center = getCenterById(centerId);
-
+BigInteger number=BigInteger.valueOf(1111111);
 			List<BigInteger> appointments = center.getAppointments();
 			List<Appointment> appointmentList = new ArrayList<Appointment>();
-
+			if(appointments.isEmpty())
+			{
+				Appointment appointment=new Appointment("0",number, "", "",false );
+				appointmentList.add(appointment);
+				return appointmentList;
+			}
 			for (BigInteger appointmentId : appointments) {
 				appointmentList.add(getAppointment(appointmentId));
 			}
