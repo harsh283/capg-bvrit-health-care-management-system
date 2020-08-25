@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import com.capg.hcms.usermanagementsystem.exceptions.ContactNumberAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.EmailAlreadyExistException;
@@ -30,6 +31,7 @@ import com.capg.hcms.usermanagementsystem.model.TestManagement;
 import com.capg.hcms.usermanagementsystem.model.User;
 import com.capg.hcms.usermanagementsystem.model.UserCredentials;
 import com.capg.hcms.usermanagementsystem.repo.UserRepo;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Service
 public class UserServiceImpl implements IUserService{
@@ -81,6 +83,7 @@ public class UserServiceImpl implements IUserService{
 		else if(userRepo.getUserByUserEmail(user.getUserEmail())!=null)
 			throw new EmailAlreadyExistException("User with Email "+user.getUserEmail()+" already exist");
 		 else
+			 user.setUserRole("customer");
 			 user.setUserId(String.valueOf(random.nextInt(100000)).substring(0, 5));
 		     userRepo.save(user);
 		return user;
@@ -107,11 +110,8 @@ public class UserServiceImpl implements IUserService{
 		}
 		existingUser.setUserName(user.getUserName());
 		existingUser.setUserPassword(user.getUserPassword());
-		existingUser.setUserRole(user.getUserRole());
 		existingUser.setUserEmail(user.getUserEmail());
-		existingUser.setAge(user.getAge());
 		existingUser.setContactNumber(user.getContactNumber());
-		existingUser.setGender(user.getGender());
 		return userRepo.save(existingUser);
 	}
 
@@ -129,7 +129,19 @@ public class UserServiceImpl implements IUserService{
 		{
 			throw new UserNotFoundException("Users unaivailable");
 		}
-		return userRepo.findAll();
+		else {
+			List<User> userList=userRepo.findAll();
+			List<User> userRoleList=new ArrayList<>();
+			for (User user : userList) {
+				if(user.getUserRole().contains("customer"))
+				{
+					userRoleList.add(user);
+					
+				}
+			}
+			return userRoleList;
+		}
+		
 	}
 
 	@Override
@@ -321,15 +333,10 @@ return approvee;
 		
 
 			DiagnosticCenter center = getCenterById(centerId);
-BigInteger number=BigInteger.valueOf(1111111);
+			BigInteger number=BigInteger.valueOf(1111111);
 			List<BigInteger> appointments = center.getAppointments();
 			List<Appointment> appointmentList = new ArrayList<Appointment>();
-			if(appointments.isEmpty())
-			{
-				Appointment appointment=new Appointment("0",number, "", "",false );
-				appointmentList.add(appointment);
-				return appointmentList;
-			}
+			
 			for (BigInteger appointmentId : appointments) {
 				appointmentList.add(getAppointment(appointmentId));
 			}

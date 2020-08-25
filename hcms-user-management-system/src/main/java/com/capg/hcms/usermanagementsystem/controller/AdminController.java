@@ -37,11 +37,21 @@ public class AdminController {
 	}
 	
 
-	
+	@HystrixCommand(fallbackMethod = "allUsersFallBack")
 	@RequestMapping("/getallusers")
 	public List<User> getAllUsers()
 	{
        return userService.getAllUsers();
+	}
+	public List<User> allUsersFallBack()
+	{
+		int num=0;
+		  BigInteger number= BigInteger.valueOf(num);
+		  Integer value=Integer.valueOf(num);
+		  User user=new User("NOT AVAILABLE","NOT AVAILABLE","",number,"xyz@gmail.com","",value,"","");
+       List<User> userList=new ArrayList();
+       userList.add(user);
+       return userList;
 	}
     @RequestMapping("/deleteallusers")
 	public boolean deleteAllUsers()
@@ -49,7 +59,7 @@ public class AdminController {
 		 userService.deleteAllUsers();
 		 return true;
 	}
-    @RequestMapping("admin/deleteuser/userId/{userId}")
+    @DeleteMapping("/deleteuser/userId/{userId}")
 	public boolean deleteUser(@PathVariable String userId)
 	{
 		return userService.deleteUser(userId);
