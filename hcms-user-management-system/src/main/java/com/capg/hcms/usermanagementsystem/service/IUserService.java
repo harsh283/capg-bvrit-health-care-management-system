@@ -9,6 +9,7 @@ import com.capg.hcms.usermanagementsystem.exceptions.PassKeyMisMatchException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserEmailInvalidException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameAlreadyExistException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserNameInvalidException;
+import com.capg.hcms.usermanagementsystem.exceptions.UserNotFoundException;
 import com.capg.hcms.usermanagementsystem.exceptions.UserPasswordInvalidException;
 import com.capg.hcms.usermanagementsystem.model.Appointment;
 import com.capg.hcms.usermanagementsystem.model.DiagnosticCenter;
@@ -49,4 +50,5 @@ public interface IUserService {
 	Appointment getAppointment(BigInteger appointmentId);
 	public User registerAdmin(User user) throws PassKeyMisMatchException;
 	public UserCredentials getUserCredentials(UserCredentials credentials );
+	public User login(String userId,String password)throws UserNotFoundException;
 }

@@ -21,6 +21,8 @@ public class DiagnosticCenterServiceImplementation implements IDiagnosticCenterS
 private Random random;
 @Autowired
 private DiagnosticCenterRepo repository;
+
+
 @Override
 public DiagnosticCenter getCenterById(String centerId) throws SpecifiedCenterDoesnotExistException {
 	boolean existingCenter = repository.existsById(centerId);
@@ -46,25 +48,22 @@ public List<DiagnosticCenter> getAllCenters() throws NoCentersAreAvailableExcept
 }
 
 
-@Override
-public DiagnosticCenter addCenter(DiagnosticCenter center) throws NoCentersAreAvailableException, CenterNameAlreadyExistsException, CenterAlreadyExistsException {
-	center.setCenterId(String.valueOf(random.nextInt(10000000)));
-	if(repository.existsById(center.getCenterId()))
-	{
-		throw new CenterAlreadyExistsException("Center already exists kindly enter another center ID");
-	}
-	List<DiagnosticCenter> listOfCenters=getAllCenters();
-			for (DiagnosticCenter diagnosticCenter : listOfCenters) {
-		
-				if(center.getCenterName().toLowerCase().equals(diagnosticCenter.getCenterName().toLowerCase()))
-				{
-					throw new CenterNameAlreadyExistsException("Center Name Already exists Kindly enter some other name ");
-				}
+		@Override
+		public DiagnosticCenter addCenter(DiagnosticCenter center) throws NoCentersAreAvailableException, CenterNameAlreadyExistsException, CenterAlreadyExistsException {
+			center.setCenterId(String.valueOf(random.nextInt(10000000)));
+			if(repository.existsById(center.getCenterId()))
+			{
+				throw new CenterAlreadyExistsException("Center already exists kindly enter another center ID");
 			}
-		
-	return repository.save(center);
-	
-}
+			
+			if(repository.existsByCenterName(center.getCenterName()))
+			{
+				throw new CenterNameAlreadyExistsException("Center Name Already exists Kindly enter some other name ");
+			}
+			
+			return repository.save(center);
+			
+		}
 
 
 @Override

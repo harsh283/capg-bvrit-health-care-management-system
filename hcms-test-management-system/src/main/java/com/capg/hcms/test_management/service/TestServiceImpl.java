@@ -20,13 +20,14 @@ public class TestServiceImpl implements ITestService{
 	TestRepo testRepo;
 	@Autowired
 	private Random random;
+	
 	@Override
 	public TestManagement addTest(TestManagement test) throws TestIdAlreadyExistsException {
 		if(testRepo.existsById(test.getTestId()))
-{
-throw new TestIdAlreadyExistsException("Test with testId" +test.getTestId()+" alreadyExists");	
-}
-		TestManagement  addtest = testRepo.saveAndFlush(test);
+		{
+		throw new TestIdAlreadyExistsException("Test with testId" +test.getTestId()+" alreadyExists");	
+		}
+		TestManagement  addtest = testRepo.save(test);
 	     return addtest;
 	}
 
@@ -100,7 +101,7 @@ throw new TestIdAlreadyExistsException("Test with testId" +test.getTestId()+" al
 
 	@Override
 	public List<TestManagement> addDefault() {
-		// TODO Auto-generated method stub
+
 		TestManagement test1=new TestManagement(String.valueOf(random.nextInt(1000)),"Blood Pressure");
 		TestManagement test2=new TestManagement(String.valueOf(random.nextInt(1000)),"Blood Sugar");
 		

@@ -49,13 +49,7 @@ class HcmsDiagnosticCenterManagementSystemApplicationTests {
 	} 
 	
 	
-/* 	@Test
- 	public void testRemoveCenter()
- 	{		
- 		service.removeCenter(center2);
- 		assertEquals(false,repo.getByCenterName("Rohan's CLinic")!=null);
- 	}
-*/
+
 	
 	@Test
 	public void testRemoveCenterException() {

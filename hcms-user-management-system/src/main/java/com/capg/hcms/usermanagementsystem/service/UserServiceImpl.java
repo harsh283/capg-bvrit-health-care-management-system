@@ -158,31 +158,20 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public DiagnosticCenter addCenter(DiagnosticCenter center) {
-		// TODO Auto-generated method stub
+
 		ResponseEntity<List<TestManagement>> testManage=restTemplate.exchange("http://hcms-diagnostic-test-management-system/test/add-default", HttpMethod.GET,null,new ParameterizedTypeReference<List<TestManagement>>() {
 		});
+		
 		List<TestManagement> listTest=testManage.getBody();
-		/* System.out.println(listtest); */
+		 System.out.println(listTest);
 		List<String> lists=new ArrayList();
 		lists.add(listTest.get(0).getTestId());
 		lists.add(listTest.get(1).getTestId());
-		String neededId=center.getCenterId();
 		center.setTests(lists);
-		
-		
-		DiagnosticCenter centerPosted=restTemplate.postForObject("http://hcms-diagnostic-center-management-system/center/addcenter", center, DiagnosticCenter.class);
-		
-		
+		DiagnosticCenter centerPosted=restTemplate.postForObject("http://hcms-diagnostic-center-management-system/center/addcenter", center, DiagnosticCenter.class);	
 		return centerPosted;
 		
-		
-		
-				/*
-				 * restTemplate.put(new URI(
-				 * "http://localhost:8090/addtestid/"+neededId+"/testId/"+listtest.get(1).
-				 * getTestId()), null);
-				 */
-		//List<TestManagement> testList=restTemplate.getForObject(url, responseType)
+
 	}
 
 	@Override
@@ -227,8 +216,7 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public TestManagement addTest(String centerId,TestManagement newTest)  {
-		// TODO Auto-generated method stub
-		//System.out.println("gfdgfh");
+	
 		DiagnosticCenter center=restTemplate.getForObject("http://hcms-diagnostic-center-management-system/center/getcenter/center-Id/"+centerId,DiagnosticCenter.class);
 		//System.out.println(center);
 		
@@ -236,14 +224,17 @@ public class UserServiceImpl implements IUserService{
 		{
 			List<String> testList=new ArrayList<>();
 			testList.add(newTest.getTestId());	
-		center.setTests(testList);
+		    center.setTests(testList);
 		}
 		else
 		{
 			center.getTests().add(newTest.getTestId());
 		}
-		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addtestid/"+centerId+"/testId/"+newTest.getTestId()), DiagnosticCenter.class);
+		
 		TestManagement  addedTest=restTemplate.postForObject("http://hcms-diagnostic-test-management-system/test/addTest",newTest,TestManagement.class);
+
+		restTemplate.put(("http://hcms-diagnostic-center-management-system/center/addtestid/"+centerId+"/testId/"+newTest.getTestId()), DiagnosticCenter.class);
+		
 		return  addedTest;
 	}
 
@@ -298,13 +289,11 @@ public class UserServiceImpl implements IUserService{
 	public Appointment approveAppointment(BigInteger appointmentId, boolean status) {
 		// TODO Auto-generated method stub
 		List<Appointment> appointmentList=getAllAppointments();
-		//System.out.println("dasghfkjlg;;sdjkfglgsdfgl;kjasdkflgl;df;lkj"+appointmentList);
 		restTemplate.put("http://hcms-appointment-management-system/appointmentadmin/approveAppointment/" + appointmentId + "/status/" + status, null);
 		Appointment approvee= restTemplate.getForObject("http://hcms-appointment-management-system/appointmentadmin/getAppointment/" + appointmentId,
 				Appointment.class);
-//List<Appointment> appointmentList=getAllAppointments();
-//System.out.println(appointmentList);
-return approvee;
+
+		return approvee;
 	
 		
 	}
@@ -320,10 +309,8 @@ return approvee;
 		for (String testId : tests) {
 			testList.add(getTestById(testId));
 		}
-
-		List<TestManagement> diagnosticTestlist = new ArrayList(testList);
 		
-		return diagnosticTestlist;
+		return testList;
 		
 	}
 
@@ -391,6 +378,20 @@ return approvee;
 		return new UserCredentials(Integer.parseInt(user.getUserId()),user.getUserPassword(),user.getUserRole());
 		}*/
 	return null;
+	}
+
+	@Override
+	public User login(String userId, String password) throws UserNotFoundException {
+		if(userRepo.existsById(userId))
+		{
+			User user=userRepo.getOne(userId);
+			return user;
+		}
+		else
+		{
+			throw new UserNotFoundException("UserNotFound");
+		}
+	
 	}
 
 	

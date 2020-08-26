@@ -37,6 +37,7 @@ public class DiagnosticCenterController {
 	{
 		return centerService.getAllCenters();
 	}
+	
 	@PostMapping("/addcenter")
 	public DiagnosticCenter addCenter(@RequestBody DiagnosticCenter center) throws  NoCentersAreAvailableException, CenterNameAlreadyExistsException, CenterAlreadyExistsException
 	{
