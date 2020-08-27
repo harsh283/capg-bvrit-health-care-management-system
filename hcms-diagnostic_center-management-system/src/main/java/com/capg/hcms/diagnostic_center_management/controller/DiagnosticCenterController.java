@@ -46,7 +46,7 @@ public class DiagnosticCenterController {
 	}
 
 	@DeleteMapping("/removecenter/centerId/{centerId}")
-	public boolean removeCenter(@PathVariable String centerId) throws NoCentersAreAvailableException
+	public boolean removeCenter(@PathVariable String centerId) throws SpecifiedCenterDoesnotExistException
 	{
 		return centerService.removeCenter(centerId);
 	}
@@ -58,7 +58,7 @@ public class DiagnosticCenterController {
 	}
 
 	@PutMapping("/addtestid/{centerId}/testId/{testId}")
-	public DiagnosticCenter assignTestId(@PathVariable String centerId,@PathVariable String testId) throws CenterAlreadyExistsException
+	public DiagnosticCenter assignTestId(@PathVariable String centerId,@PathVariable String testId) throws  SpecifiedCenterDoesnotExistException
 	{
 		return centerService.addTestId(centerId, testId);
 	}

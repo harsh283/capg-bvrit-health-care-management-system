@@ -1,5 +1,11 @@
-package com.capg.hcms.diagnostic_center_management.controller;
+/**
+	* Project Name : Health Care Management System
+	*
+	* 
+**/
 
+
+package com.capg.hcms.diagnostic_center_management.controller;
 import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +20,14 @@ import com.capg.hcms.diagnostic_center_management.exceptions.CenterNameAlreadyEx
 import com.capg.hcms.diagnostic_center_management.exceptions.ErrorInfo;
 import com.capg.hcms.diagnostic_center_management.exceptions.NoCentersAreAvailableException;
 import com.capg.hcms.diagnostic_center_management.exceptions.SpecifiedCenterDoesnotExistException;
+
+/**
+	* The GlobalExceptionHandler class to control the exceptions raised
+	*
+	* @author   :Shambu Harsh Kumar
+	* @version  :1.0
+	* @since    :2020-08-20 
+**/
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
